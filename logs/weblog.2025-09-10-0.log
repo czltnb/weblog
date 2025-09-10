@@ -1,0 +1,7 @@
+2025-09-10 22:25:34.858 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - Starting WeblogWebApplicationTests using Java 1.8.0_321 on LAPTOP-2LT7366H with PID 7364 (started by HP in E:\java_workspace\weblog-springboot\weblog-web)
+2025-09-10 22:25:34.858 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - The following profiles are active: prod
+2025-09-10 22:25:35.790 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - Started WeblogWebApplicationTests in 1.265 seconds (JVM running for 1.941)
+2025-09-10 22:25:35.974 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Info 级别日志
+2025-09-10 22:25:35.974 [main] WARN  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Warn 级别日志
+2025-09-10 22:25:35.975 [main] ERROR com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Error 级别日志
+2025-09-10 22:25:35.975 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行带有占位符日志，作者：czltnb
