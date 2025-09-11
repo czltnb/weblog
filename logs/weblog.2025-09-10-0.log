@@ -5,3 +5,17 @@
 2025-09-10 22:25:35.974 [main] WARN  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Warn 级别日志
 2025-09-10 22:25:35.975 [main] ERROR com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Error 级别日志
 2025-09-10 22:25:35.975 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行带有占位符日志，作者：czltnb
+2025-09-10 22:29:45.518 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - Starting WeblogWebApplicationTests using Java 1.8.0_321 on LAPTOP-2LT7366H with PID 27508 (started by HP in E:\java_workspace\weblog\weblog-springboot\weblog-web)
+2025-09-10 22:29:45.519 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - The following profiles are active: prod
+2025-09-10 22:29:46.461 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - Started WeblogWebApplicationTests in 1.303 seconds (JVM running for 2.05)
+2025-09-10 22:29:46.642 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Info 级别日志
+2025-09-10 22:29:46.642 [main] WARN  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Warn 级别日志
+2025-09-10 22:29:46.642 [main] ERROR com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Error 级别日志
+2025-09-10 22:29:46.642 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行带有占位符日志，作者：czltnb
+2025-09-10 22:30:31.688 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - Starting WeblogWebApplicationTests using Java 1.8.0_321 on LAPTOP-2LT7366H with PID 28792 (started by HP in E:\java_workspace\weblog\weblog-springboot\weblog-web)
+2025-09-10 22:30:31.688 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - The following profiles are active: prod
+2025-09-10 22:30:32.609 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - Started WeblogWebApplicationTests in 1.337 seconds (JVM running for 2.197)
+2025-09-10 22:30:32.809 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Info 级别日志
+2025-09-10 22:30:32.809 [main] WARN  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Warn 级别日志
+2025-09-10 22:30:32.809 [main] ERROR com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行 Error 级别日志
+2025-09-10 22:30:32.809 [main] INFO  com.czltnb.weblog.web.WeblogWebApplicationTests - 这是一行带有占位符日志，作者：czltnb
