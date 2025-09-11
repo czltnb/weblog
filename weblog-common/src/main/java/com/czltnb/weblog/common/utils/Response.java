@@ -1,5 +1,7 @@
 package com.czltnb.weblog.common.utils;
 
+import com.czltnb.weblog.common.exception.BaseExceptionInterface;
+import com.czltnb.weblog.common.exception.BizException;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -47,5 +49,23 @@ public class Response<T> implements Serializable {
         response.setMessage(errorMessage);
         return response;
     }
+
+    public static <T> Response<T> fail(BizException bizException) {
+        Response<T> response = new Response<>();
+        response.setSuccess(false);
+        response.setErrorCode(bizException.getErrorCode());
+        response.setMessage(bizException.getErrorMessage());
+        return response;
+    }
+
+    public static <T> Response<T> fail(BaseExceptionInterface baseExceptionInterface) {
+        Response<T> response = new Response<>();
+        response.setSuccess(false);
+        response.setErrorCode(baseExceptionInterface.getErrorCode());
+        response.setMessage(baseExceptionInterface.getErrorMessage());
+        return response;
+    }
+
+
 }
 
