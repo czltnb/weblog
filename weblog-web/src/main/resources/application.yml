@@ -9,3 +9,9 @@ spring:
 jwt:
   issuer: czltnb
   secret: HqQARiucC/qxlArAwgXCXWdCMGrRaRQgSdB3rMEb7olLSN5ibgz/B+FmqOFXoLXN9xFpJUtOe7QUXkFpioHrkg==
+  # token 过期时间（单位：分钟） 24*60
+  tokenExpireTime: 1440
+  # token 请求头中的 key 值
+  tokenHeaderKey: Authorization
+  # token 请求头中的 value 值前缀
+  tokenPrefix: Bearer
