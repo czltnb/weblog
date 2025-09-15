@@ -3,6 +3,7 @@ package com.czltnb.weblog.web.controller;
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
+import com.czltnb.weblog.common.utils.JsonUtil;
 import com.czltnb.weblog.common.utils.Response;
 import com.czltnb.weblog.web.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TestController {
 
-    @PostMapping("/test")
+    @PostMapping("/admin/test")
     @ApiOperationLog(description = "测试接口")
     public Response test(@RequestBody @Validated User user) {
+//        log.info(JsonUtil.toJsonString(user));
         return Response.success();
     }
 

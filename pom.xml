@@ -29,6 +29,8 @@
         <module>weblog-admin</module>
         <!-- 通用工具类 -->
         <module>weblog-common</module>
+        <!-- JWT 模块 -->
+        <module>weblog-jwt</module>
     </modules>
 
 
@@ -65,6 +67,12 @@
             <dependency>
                 <groupId>com.czltnb</groupId>
                 <artifactId>weblog-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.czltnb</groupId>
+                <artifactId>weblog-jwt</artifactId>
                 <version>${revision}</version>
             </dependency>
 
