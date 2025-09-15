@@ -6,3 +6,6 @@ spring:
     # 默认激活 dev 环境
     active: dev
 
+jwt:
+  issuer: czltnb
+  secret: HqQARiucC/qxlArAwgXCXWdCMGrRaRQgSdB3rMEb7olLSN5ibgz/B+FmqOFXoLXN9xFpJUtOe7QUXkFpioHrkg==
