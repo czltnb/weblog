@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable(). // 禁用 csrf
-                formLogin().disable() // 禁用表单登录
+                formLogin().disable() // 禁用表单登录 Spring Security 默认会提供一个登录页面，这里禁用它（因为前后端分离项目通常自己做登录页面，用接口登录）。
                 .apply(jwtAuthenticationSecurityConfig) // 设置用户登录认证相关配置
                 .and()
                 .authorizeHttpRequests()
@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 将 Token 校验过滤器添加到用户认证过滤器之前
         ;
     }
+
 
     /**
      * Token 校验过滤器

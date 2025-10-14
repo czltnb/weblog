@@ -6,6 +6,8 @@ import com.czltnb.weblog.common.exception.BizException;
 import com.czltnb.weblog.common.utils.JsonUtil;
 import com.czltnb.weblog.common.utils.Response;
 import com.czltnb.weblog.web.model.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.validation.BindingResult;
@@ -20,10 +22,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
+@Api(tags = "前台首页模块")
 public class TestController {
 
-    @PostMapping("/admin/test")
+    @PostMapping("/test")
     @ApiOperationLog(description = "测试接口")
+    @ApiOperation(value = "测试接口")
     public Response test(@RequestBody @Validated User user) {
 //        log.info(JsonUtil.toJsonString(user));
         return Response.success();

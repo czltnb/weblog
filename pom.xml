@@ -54,6 +54,8 @@
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <jjwt.version>0.11.2</jjwt.version>
 
+        <knife4j.version>4.3.0</knife4j.version>
+
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -127,6 +129,12 @@
                 <version>${jjwt.version}</version>
             </dependency>
 
+            <!-- Knife4j（API 文档工具）-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
 
 
 

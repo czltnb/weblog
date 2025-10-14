@@ -1,10 +1,12 @@
 package com.czltnb.weblog.web.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.validation.constraints.*;
 
 @Data
+@ApiModel(value = "用户实体类")
 public class User {
 
     @NotBlank(message = "用户名不能为空")
