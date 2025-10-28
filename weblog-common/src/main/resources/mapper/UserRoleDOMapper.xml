@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.czltnb.weblog.common.domain.mapper.UserRoleDOMapper">
+    <resultMap id="BaseResultMap" type="com.czltnb.weblog.common.domain.dos.UserRoleDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="role" jdbcType="VARCHAR" property="role"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"></result>
+    </resultMap>
+
+    <!--返回List的写法和普通的一样 ???-->
+    <select id="selectByUsername" parameterType="string" resultMap="BaseResultMap">
+        select id,username,role,create_time
+        from t_user_role
+        where username = #{username}
+    </select>
+</mapper>

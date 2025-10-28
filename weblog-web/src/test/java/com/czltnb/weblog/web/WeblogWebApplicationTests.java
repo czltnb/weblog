@@ -1,7 +1,7 @@
 package com.czltnb.weblog.web;
 
 import com.czltnb.weblog.common.domain.dos.UserDO;
-import com.czltnb.weblog.common.domain.mapper.UserMapper;
+import com.czltnb.weblog.common.domain.mapper.UserDOMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ class WeblogWebApplicationTests {
     }
 
     @Autowired
-    private UserMapper userMapper;
+    private UserDOMapper userDOMapper;
 
     @Test
     void insertTest() {
@@ -42,7 +42,7 @@ class WeblogWebApplicationTests {
                 .isDeleted(false)
                 .build();
 
-        userMapper.insert(userDO);
+        userDOMapper.insert(userDO);
     }
 
 }
