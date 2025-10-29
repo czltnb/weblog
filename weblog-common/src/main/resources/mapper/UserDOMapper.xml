@@ -15,4 +15,9 @@
         from t_user
         where username = #{username}
     </select>
+    <update id="updatePasswordByUsername">
+        update t_user
+        set password = #{password}
+        where username = #{username}
+    </update>
 </mapper>

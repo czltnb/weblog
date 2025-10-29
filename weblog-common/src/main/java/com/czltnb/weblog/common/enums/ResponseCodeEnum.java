@@ -17,7 +17,9 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     LOGIN_FAIL("20000", "登录失败"),
     USERNAME_OR_PWD_ERROR("20001", "用户名或密码错误"),
     UNAUTHORIZED("20002", "无访问权限，请先登录！"),
+    USERNAME_NOT_FOUND("20003", "该用户不存在"),
     FORBIDDEN("20004","演示账号仅支持查询操作"),
+
     ;
 
     // 异常码

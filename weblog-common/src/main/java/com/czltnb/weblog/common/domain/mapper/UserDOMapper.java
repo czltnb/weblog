@@ -13,6 +13,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserDOMapper {
 
-    UserDO findByUsername(@Param("username") String username);
+    UserDO findByUsername(String username);
 
+    //Mapper 接口方法中，可通过 @Param 显式指定参数名，XML 中无需声明 parameterType：
+    int updatePasswordByUsername(@Param("username") String username, @Param("password") String password);
 }
