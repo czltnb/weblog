@@ -1,4 +1,4 @@
-package com.czltnb.weblog.admin.model.vo;
+package com.czltnb.weblog.admin.model.vo.user;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

@@ -15,7 +15,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * @author: 犬小哈
+ * @author: czltnb
  * @url: www.quanxiaoha.com
  * @date: 2023-08-24 16:45
  * @description: 认证功能相关配置

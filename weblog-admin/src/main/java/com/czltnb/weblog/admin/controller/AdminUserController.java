@@ -1,8 +1,7 @@
 package com.czltnb.weblog.admin.controller;
 
-import com.czltnb.weblog.admin.model.vo.UpdateAdminUserPasswordReqVO;
+import com.czltnb.weblog.admin.model.vo.user.UpdateAdminUserPasswordReqVO;
 import com.czltnb.weblog.admin.service.AdminUserService;
-import com.czltnb.weblog.admin.service.impl.AdminUserServiceImpl;
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
 import com.czltnb.weblog.common.utils.Response;
 import io.swagger.annotations.Api;
@@ -28,6 +27,13 @@ public class AdminUserController {
     @ApiOperationLog(description = "修改密码")
     public Response updatePassword(@RequestBody @Validated UpdateAdminUserPasswordReqVO updateAdminUserPasswordReqVO) {
         return adminUserService.updatePassword(updateAdminUserPasswordReqVO);
+    }
+
+    @PostMapping("/user/info")
+    @ApiOperation(value = "获取用户信息")
+    @ApiOperationLog(description = "获取用户信息")
+    public Response findUserInfo(){
+        return adminUserService.findUserInfo();
     }
 
 }
