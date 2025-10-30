@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class AdminCategoryServiceImpl implements AdminCategoryService {
 
     @Autowired
-    CategoryDOMapper categoryDOMapper;
+    private CategoryDOMapper categoryDOMapper;
 
     @Override
     public Response addCategory(AddCategoryReqVO addCategoryReqVO) {

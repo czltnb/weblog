@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.czltnb.weblog.common.domain.mapper.BlogSettingsDOMapper">
+    <resultMap id="BaseResultMap" type="com.czltnb.weblog.common.domain.dos.BlogSettingsDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="logo" jdbcType="VARCHAR" property="logo"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="github_homepage" jdbcType="VARCHAR" property="githubHomepage"/>
+        <result column="csdn_homepage" jdbcType="VARCHAR" property="csdnHomepage"/>
+        <result column="gitee_homepage" jdbcType="VARCHAR" property="giteeHomepage"/>
+        <result column="zhihu_homepage" jdbcType="VARCHAR" property="zhihuHomepage"/>
+    </resultMap>
+    <select id="selectById" resultMap="BaseResultMap">
+        select *
+        from t_blog_settings
+        WHERE id = #{id}
+    </select>
+    <insert id="insert" parameterType="com.czltnb.weblog.common.domain.dos.BlogSettingsDO">
+        insert into t_blog_settings
+        (logo,name,author,introduction,avatar,github_homepage,csdn_homepage,gitee_homepage,zhihu_homepage)
+        VALUES
+        (#{logo},#{name},#{author},#{introduction},#{avatar},#{githubHomepage},#{csdnHomepage},#{giteeHomepage},#{zhihuHomepage})
+    </insert>
+    <update id="update" parameterType="com.czltnb.weblog.common.domain.dos.BlogSettingsDO">
+        update t_blog_settings
+        set
+            logo = #{logo},
+            name = #{name},
+            author = #{author},
+            introduction = #{introduction},
+            avatar = #{avatar},
+            github_homepage = #{githubHomepage},
+            csdn_homepage = #{csdnHomepage},
+            gitee_homepage = #{giteeHomepage},
+            zhihu_homepage = #{zhihuHomepage}
+        WHERE id = #{id}
+    </update>
+</mapper>
