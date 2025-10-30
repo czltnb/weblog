@@ -1,10 +1,24 @@
 package com.czltnb.weblog.common.domain.mapper;
 
 import com.czltnb.weblog.common.domain.dos.TagDO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TagDOMapper {
 
     TagDO selectByName(String tagName);
 
     int insertTag(TagDO tag);
+
+
+    int selectCountByTagName(String tagName);
+
+
+
+    List<TagDO> selectPageListByTagName(
+            @Param("name") String tagName,
+            @Param("offset") long offset,
+            @Param("pageSize")long pageSize
+    );
 }

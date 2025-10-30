@@ -20,4 +20,15 @@
         VALUES
         (#{name})
     </insert>
+    <select id="selectCountByTagName" resultType="int">
+        select count(*)
+        from t_tag
+        where is_deleted = 0 AND name like concat ('%',#{name},'%')
+    </select>
+    <select id="selectPageListByTagName" resultMap="BaseResultMap">
+        select id,name,create_time,update_time
+        from t_tag
+        where is_deleted = 0 AND name like concat ('%',#{name},'%')
+            limit #{offset},#{pageSize}
+    </select>
 </mapper>

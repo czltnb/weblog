@@ -61,7 +61,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         //模糊查询数据库，求出总数据量 totalCount
         long totalCount =categoryDOMapper.selectCountByCategoryName(categoryName);
 
-        //
+
         if(totalCount == 0){
             return PageResponse.success(null,pageNo,totalCount,pageSize);
         }

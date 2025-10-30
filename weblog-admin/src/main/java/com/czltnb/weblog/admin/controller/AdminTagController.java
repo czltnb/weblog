@@ -1,8 +1,10 @@
 package com.czltnb.weblog.admin.controller;
 
 import com.czltnb.weblog.admin.model.vo.tag.AddTagReqVO;
+import com.czltnb.weblog.admin.model.vo.tag.FindTagPageListReqVO;
 import com.czltnb.weblog.admin.service.AdminTagService;
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
+import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +28,16 @@ public class AdminTagController {
     @ApiOperationLog(description = "添加标签")
     public Response addTag(@RequestBody @Validated AddTagReqVO addTagReqVO) {
         return adminTagService.addTag(addTagReqVO);
+    }
+
+    /**
+     * 分页查询接口
+     */
+    @PostMapping("/tag/findPageList")
+    @ApiOperation(value = "标签名分页查询")
+    @ApiOperationLog(description = "文章标签名分页查询")
+    public PageResponse findTagPageList(@RequestBody @Validated FindTagPageListReqVO findTagPageListReqVO) {
+        return adminTagService.findTagPageList(findTagPageListReqVO);
     }
 
 }
