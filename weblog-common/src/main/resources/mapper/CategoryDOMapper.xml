@@ -19,6 +19,11 @@
         from t_category
         WHERE is_deleted = 0 AND id = #{id}
     </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id,name,create_time,update_time
+        from t_category
+        WHERE is_deleted = 0
+    </select>
     <insert id="insertCategory" parameterType="com.czltnb.weblog.common.domain.dos.CategoryDO">
         insert into t_category
         (name)

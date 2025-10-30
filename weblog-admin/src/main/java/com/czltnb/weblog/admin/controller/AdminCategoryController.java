@@ -50,4 +50,11 @@ public class AdminCategoryController {
     public Response deleteCategory(@RequestBody @Validated DeleteCategoryReqVO deleteCategoryReqVO){
         return adminCategoryService.deleteCategory(deleteCategoryReqVO);
     }
+
+    @PostMapping("/category/select/list")
+    @ApiOperation(value = "分类 Select 下拉列表数据获取")
+    @ApiOperationLog(description = "分类 Select 下拉列表数据获取")
+    public Response selectCategoryList(){
+        return adminCategoryService.selectCategoryList();
+    }
 }

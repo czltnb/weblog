@@ -22,4 +22,9 @@ public interface AdminCategoryService {
      * 删除文章分类
      */
     Response deleteCategory(DeleteCategoryReqVO deleteCategoryReqVO);
+
+    /**
+     * 获取分类列表
+     */
+    Response selectCategoryList();
 }

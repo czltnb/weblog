@@ -9,6 +9,7 @@ import com.czltnb.weblog.common.domain.dos.CategoryDO;
 import com.czltnb.weblog.common.domain.mapper.CategoryDOMapper;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
+import com.czltnb.weblog.common.model.vo.SelectListRspVO;
 import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -103,6 +104,28 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         categoryDOMapper.deleteCategoryById(categoryId);
 
         return Response.success();
+    }
+
+    @Override
+    public Response selectCategoryList() {
+
+        //查询到的全部分类
+        List<CategoryDO> categoryDOS = categoryDOMapper.selectAll();
+
+        //DO转VO
+        List<SelectListRspVO> selectListCategoryRspVOS = null;
+
+        //如果分类的数据不为空
+        if(!CollectionUtils.isEmpty(categoryDOS)){
+            selectListCategoryRspVOS = categoryDOS.stream()
+                    .map(categoryDO -> SelectListRspVO.builder()
+                            .label(categoryDO.getName())
+                            .value(categoryDO.getId())
+                            .build())
+                    .collect(Collectors.toList());
+        }
+
+        return Response.success(selectListCategoryRspVOS);
     }
 
 }

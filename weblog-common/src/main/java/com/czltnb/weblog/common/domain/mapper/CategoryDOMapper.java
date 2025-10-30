@@ -11,6 +11,8 @@ public interface CategoryDOMapper {
 
     CategoryDO selectById(@Param("id") Long id);
 
+    List<CategoryDO> selectAll();
+
     int insertCategory(CategoryDO category);
 
     //模糊查询某个分类的文章数
