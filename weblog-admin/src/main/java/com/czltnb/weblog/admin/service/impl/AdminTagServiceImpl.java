@@ -1,6 +1,7 @@
 package com.czltnb.weblog.admin.service.impl;
 
 import com.czltnb.weblog.admin.model.vo.tag.AddTagReqVO;
+import com.czltnb.weblog.admin.model.vo.tag.DeleteTagReqVO;
 import com.czltnb.weblog.admin.model.vo.tag.FindTagPageListReqVO;
 import com.czltnb.weblog.admin.model.vo.tag.FindTagPageListRspVO;
 import com.czltnb.weblog.admin.service.AdminTagService;
@@ -76,4 +77,18 @@ public class AdminTagServiceImpl implements AdminTagService {
         return PageResponse.success(findTagPageListRspVOS,pageNo,totalCount,pageSize);
     }
 
+    @Override
+    public Response deleteTag(DeleteTagReqVO deleteTagReqVO) {
+        Long tagId = deleteTagReqVO.getId();
+
+        TagDO tagDO = tagDOMapper.selectById(tagId);
+        if(Objects.isNull(tagDO)){
+            throw new BizException(ResponseCodeEnum.TAG_ID_IS_NOT_EXISTED);
+        }
+
+        //逻辑删除
+        tagDOMapper.deleteTagById(tagId);
+
+        return Response.success();
+    }
 }

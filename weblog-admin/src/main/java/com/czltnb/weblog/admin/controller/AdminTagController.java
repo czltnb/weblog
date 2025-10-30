@@ -1,6 +1,7 @@
 package com.czltnb.weblog.admin.controller;
 
 import com.czltnb.weblog.admin.model.vo.tag.AddTagReqVO;
+import com.czltnb.weblog.admin.model.vo.tag.DeleteTagReqVO;
 import com.czltnb.weblog.admin.model.vo.tag.FindTagPageListReqVO;
 import com.czltnb.weblog.admin.service.AdminTagService;
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
@@ -38,6 +39,16 @@ public class AdminTagController {
     @ApiOperationLog(description = "文章标签名分页查询")
     public PageResponse findTagPageList(@RequestBody @Validated FindTagPageListReqVO findTagPageListReqVO) {
         return adminTagService.findTagPageList(findTagPageListReqVO);
+    }
+
+    /**
+     * 逻辑删除标签接口开发
+     */
+    @PostMapping("/tag/delete")
+    @ApiOperation(value = "删除标签")
+    @ApiOperationLog(description = "删除文章标签")
+    public Response deleteTag(@RequestBody @Validated DeleteTagReqVO deleteTagReqVO) {
+        return adminTagService.deleteTag(deleteTagReqVO);
     }
 
 }

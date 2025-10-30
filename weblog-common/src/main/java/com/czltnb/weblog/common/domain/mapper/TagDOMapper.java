@@ -9,6 +9,9 @@ public interface TagDOMapper {
 
     TagDO selectByName(String tagName);
 
+    TagDO selectById(Long id);
+
+
     int insertTag(TagDO tag);
 
 
@@ -21,4 +24,7 @@ public interface TagDOMapper {
             @Param("offset") long offset,
             @Param("pageSize")long pageSize
     );
+
+    //逻辑删除，修改分类的 is_deleted字段
+    int deleteTagById(@Param("id") Long id);
 }
