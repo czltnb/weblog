@@ -51,4 +51,11 @@ public class AdminTagController {
         return adminTagService.deleteTag(deleteTagReqVO);
     }
 
+    @PostMapping("/tag/select/list")
+    @ApiOperation(value = "标签 Select 下拉列表数据获取")
+    @ApiOperationLog(description = "标签 Select 下拉列表数据获取")
+    public Response selectTagList(){
+        return adminTagService.selectTagList();
+    }
+
 }

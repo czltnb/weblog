@@ -9,6 +9,7 @@ import com.czltnb.weblog.common.domain.dos.TagDO;
 import com.czltnb.weblog.common.domain.mapper.TagDOMapper;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
+import com.czltnb.weblog.common.model.vo.SelectListRspVO;
 import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -90,5 +91,25 @@ public class AdminTagServiceImpl implements AdminTagService {
         tagDOMapper.deleteTagById(tagId);
 
         return Response.success();
+    }
+
+    @Override
+    public Response selectTagList(){
+
+        List<TagDO> tagDOS = tagDOMapper.selectAll();
+        //DO转VO
+        List<SelectListRspVO> selectListTagRspVOS = null;
+
+        //如果标签的数据不为空
+        if(!CollectionUtils.isEmpty(tagDOS)){
+            selectListTagRspVOS = tagDOS.stream()
+                    .map(tagDO -> SelectListRspVO.builder()
+                            .label(tagDO.getName())
+                            .value(tagDO.getId())
+                            .build())
+                    .collect(Collectors.toList());
+        }
+
+        return Response.success(selectListTagRspVOS);
     }
 }

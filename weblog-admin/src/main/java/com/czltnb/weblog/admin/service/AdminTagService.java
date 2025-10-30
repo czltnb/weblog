@@ -22,4 +22,9 @@ public interface AdminTagService {
      * 删除标签
      */
     Response deleteTag(DeleteTagReqVO deleteTagReqVO);
+
+    /**
+     * 获取标签列表
+     */
+    Response selectTagList();
 }
