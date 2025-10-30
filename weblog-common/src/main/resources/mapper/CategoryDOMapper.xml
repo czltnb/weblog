@@ -20,5 +20,16 @@
         VALUES
         (#{name})
     </insert>
+    <select id="selectCountByCategoryName" resultType="int">
+        select count(*)
+        from t_category
+        where is_deleted = 0 AND name like concat ('%',#{name},'%')
+    </select>
+    <select id="selectPageListByCategoryName" resultMap="BaseResultMap">
+        select id,name,create_time,update_time
+        from t_category
+        where is_deleted = 0 AND name like concat ('%',#{name},'%')
+        limit #{offset},#{pageSize}
+    </select>
 
 </mapper>

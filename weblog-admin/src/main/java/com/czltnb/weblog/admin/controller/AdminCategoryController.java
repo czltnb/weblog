@@ -1,8 +1,10 @@
 package com.czltnb.weblog.admin.controller;
 
 import com.czltnb.weblog.admin.model.vo.category.AddCategoryReqVO;
+import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 import com.czltnb.weblog.admin.service.AdminCategoryService;
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
+import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,5 +28,15 @@ public class AdminCategoryController {
     @ApiOperationLog(description = "添加文章分类")
     public Response addCategory(@RequestBody @Validated AddCategoryReqVO addCategoryReqVO){
         return adminCategoryService.addCategory(addCategoryReqVO);
+    }
+
+    /**
+     * 分页查询接口
+     */
+    @PostMapping("/category/findPageList")
+    @ApiOperation(value = "分类名分页查询")
+    @ApiOperationLog(description = "文章分类名分页查询")
+    public PageResponse findCategoryPageList(@RequestBody @Validated FindCategoryPageListReqVO findCategoryPageListReqVO){
+        return adminCategoryService.findCategoryPageList(findCategoryPageListReqVO);
     }
 }

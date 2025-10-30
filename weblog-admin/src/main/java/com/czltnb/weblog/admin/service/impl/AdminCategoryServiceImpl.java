@@ -1,17 +1,23 @@
 package com.czltnb.weblog.admin.service.impl;
 
 import com.czltnb.weblog.admin.model.vo.category.AddCategoryReqVO;
+import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
+import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.czltnb.weblog.admin.service.AdminCategoryService;
 import com.czltnb.weblog.common.domain.dos.CategoryDO;
 import com.czltnb.weblog.common.domain.mapper.CategoryDOMapper;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
+import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -39,6 +45,46 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         categoryDOMapper.insertCategory(insertCategoryDO);
 
         return Response.success();
+    }
+
+    @Override
+    public PageResponse findCategoryPageList(FindCategoryPageListReqVO findCategoryPageListReqVO) {
+        String categoryName = findCategoryPageListReqVO.getName();
+        long pageNo = findCategoryPageListReqVO.getPageNo(); //当前页码
+
+        long pageSize = 4;//定义每页数据量为 4
+
+        //如果传入的name名字为空，则模糊查询条件为"%%"就返回所有数据
+        //不为空，则正常模糊查询
+        //模糊查询数据库，求出总数据量 totalCount
+        long totalCount =categoryDOMapper.selectCountByCategoryName(categoryName);
+
+        //
+        if(totalCount == 0){
+            return PageResponse.success(null,pageNo,totalCount,pageSize);
+        }
+
+        long offset = PageResponse.getOffset(pageNo, pageSize);
+
+        //模糊分页查询
+        List<CategoryDO> categoryDOS = categoryDOMapper.selectPageListByCategoryName(categoryName, offset,pageSize);
+
+
+//        if(CollectionUtils.isEmpty(categoryDOS)){
+//            return PageResponse.success(null,pageNo,totalCount,pageSize);
+//        }
+//
+        //DO转VO
+        List<FindCategoryPageListRspVO> findCategoryPageListRspVOS = null;
+        findCategoryPageListRspVOS = categoryDOS.stream()
+                .map(categoryDO -> FindCategoryPageListRspVO.builder()
+                        .id(categoryDO.getId())
+                        .name(categoryDO.getName())
+                        .createTime(categoryDO.getCreateTime())
+                        .build())
+                .collect(Collectors.toList());
+
+        return PageResponse.success(findCategoryPageListRspVOS,pageNo,totalCount,pageSize);
     }
 
 }
