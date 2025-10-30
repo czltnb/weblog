@@ -70,10 +70,11 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         List<CategoryDO> categoryDOS = categoryDOMapper.selectPageListByCategoryName(categoryName, offset,pageSize);
 
 
-//        if(CollectionUtils.isEmpty(categoryDOS)){
-//            return PageResponse.success(null,pageNo,totalCount,pageSize);
-//        }
-//
+        //再判定一次，因为可能有"分类总数不为空，但是指定查询的页码大于最大页码，查到空数据"的情况
+        if(CollectionUtils.isEmpty(categoryDOS)){
+            return PageResponse.success(null,pageNo,totalCount,pageSize);
+        }
+
         //DO转VO
         List<FindCategoryPageListRspVO> findCategoryPageListRspVOS = null;
         findCategoryPageListRspVOS = categoryDOS.stream()
