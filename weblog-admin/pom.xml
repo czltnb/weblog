@@ -63,6 +63,13 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
+        <!-- 对象存储 Minio -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+        </dependency>
+
+
 
 
 

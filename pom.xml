@@ -56,6 +56,8 @@
 
         <knife4j.version>4.3.0</knife4j.version>
 
+        <minio.version>8.2.1</minio.version>
+
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -134,6 +136,13 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- 对象存储 Minio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
 
 
