@@ -14,6 +14,11 @@
         from t_category
         WHERE is_deleted = 0 AND name = #{name}
     </select>
+    <select id="selectById" resultMap="BaseResultMap">
+        select id,name,create_time,update_time
+        from t_category
+        WHERE is_deleted = 0 AND id = #{id}
+    </select>
     <insert id="insertCategory" parameterType="com.czltnb.weblog.common.domain.dos.CategoryDO">
         insert into t_category
         (name)
@@ -31,5 +36,10 @@
         where is_deleted = 0 AND name like concat ('%',#{name},'%')
         limit #{offset},#{pageSize}
     </select>
+    <update id="deleteCategoryById" parameterType="long">
+        update t_category
+        set is_deleted = 1
+        WHERE is_deleted = 0 AND id = #{id}
+    </update>
 
 </mapper>

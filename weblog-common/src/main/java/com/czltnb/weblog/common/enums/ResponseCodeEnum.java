@@ -20,6 +20,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     USERNAME_NOT_FOUND("20003", "该用户不存在"),
     FORBIDDEN("20004","演示账号仅支持查询操作"),
     CATEGORY_NAME_IS_EXISTED("20005","该分类已经存在，请勿重复添加!"),
+    CATEGORY_ID_IS_NOT_EXISTED("20006","该分类不存在")
     ;
 
     // 异常码

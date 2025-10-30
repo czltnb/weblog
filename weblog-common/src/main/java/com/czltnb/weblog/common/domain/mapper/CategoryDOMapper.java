@@ -9,6 +9,8 @@ public interface CategoryDOMapper {
 
     CategoryDO selectByName(@Param("name") String categoryName);
 
+    CategoryDO selectById(@Param("id") Long id);
+
     int insertCategory(CategoryDO category);
 
     //模糊查询某个分类的文章数
@@ -23,4 +25,7 @@ public interface CategoryDOMapper {
             @Param("offset") long offset,
             @Param("pageSize")long pageSize
     );
+
+    //逻辑删除，修改分类的 is_deleted字段
+    int deleteCategoryById(@Param("id") Long id);
 }

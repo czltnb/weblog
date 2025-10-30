@@ -1,6 +1,7 @@
 package com.czltnb.weblog.admin.service.impl;
 
 import com.czltnb.weblog.admin.model.vo.category.AddCategoryReqVO;
+import com.czltnb.weblog.admin.model.vo.category.DeleteCategoryReqVO;
 import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.czltnb.weblog.admin.service.AdminCategoryService;
@@ -86,6 +87,22 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
                 .collect(Collectors.toList());
 
         return PageResponse.success(findCategoryPageListRspVOS,pageNo,totalCount,pageSize);
+    }
+
+    @Override
+    public Response deleteCategory(DeleteCategoryReqVO deleteCategoryReqVO) {
+        Long categoryId = deleteCategoryReqVO.getId();
+
+        //先查询是否有该分类
+        CategoryDO categoryDO = categoryDOMapper.selectById(categoryId);
+        if(Objects.isNull(categoryDO)){
+            throw new BizException(ResponseCodeEnum.CATEGORY_ID_IS_NOT_EXISTED);
+        }
+
+        //逻辑删除该分类
+        categoryDOMapper.deleteCategoryById(categoryId);
+
+        return Response.success();
     }
 
 }
