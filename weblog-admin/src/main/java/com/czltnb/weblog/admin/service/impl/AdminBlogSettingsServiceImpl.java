@@ -1,5 +1,6 @@
 package com.czltnb.weblog.admin.service.impl;
 
+import com.czltnb.weblog.admin.model.vo.blogsettings.FindBlogSettingsRspVO;
 import com.czltnb.weblog.admin.model.vo.blogsettings.UpdateBlogSettingsReqVO;
 import com.czltnb.weblog.admin.service.AdminBlogSettingsService;
 import com.czltnb.weblog.common.domain.dos.BlogSettingsDO;
@@ -45,4 +46,28 @@ public class AdminBlogSettingsServiceImpl implements AdminBlogSettingsService {
 
         return Response.success();
     }
+
+
+    @Override
+    public Response findBlogSettingsDetail(){
+        BlogSettingsDO blogSettingsDO = blogSettingsDOMapper.selectById(1L);
+
+        FindBlogSettingsRspVO findBlogSettingsRspVO = null;
+        if(Objects.nonNull(blogSettingsDO)) {
+            findBlogSettingsRspVO = FindBlogSettingsRspVO.builder()
+                    .logo(blogSettingsDO.getLogo())
+                    .name(blogSettingsDO.getName())
+                    .author(blogSettingsDO.getAuthor())
+                    .introduction(blogSettingsDO.getIntroduction())
+                    .avatar(blogSettingsDO.getAvatar())
+                    .githubHomepage(blogSettingsDO.getGithubHomepage())
+                    .csdnHomepage(blogSettingsDO.getCsdnHomepage())
+                    .giteeHomepage(blogSettingsDO.getGiteeHomepage())
+                    .zhihuHomepage(blogSettingsDO.getZhihuHomepage())
+                    .build();
+        }
+
+        return Response.success(findBlogSettingsRspVO);
+    }
+
 }
