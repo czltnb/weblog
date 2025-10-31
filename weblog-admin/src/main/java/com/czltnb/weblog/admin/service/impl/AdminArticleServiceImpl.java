@@ -1,20 +1,25 @@
 package com.czltnb.weblog.admin.service.impl;
 
 import com.czltnb.weblog.admin.model.vo.article.DeleteArticleReqVO;
+import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
+import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListRspVO;
 import com.czltnb.weblog.admin.model.vo.article.PublishArticleReqVO;
 import com.czltnb.weblog.admin.service.AdminArticleService;
 import com.czltnb.weblog.common.domain.dos.*;
 import com.czltnb.weblog.common.domain.mapper.*;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
+import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
@@ -212,5 +217,46 @@ public class AdminArticleServiceImpl implements AdminArticleService {
         articleTagRelDOMapper.delete(articleId);
 
         return Response.success();
+    }
+
+    @Override
+    public PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePageListReqVO) {
+
+        String title = findArticlePageListReqVO.getTitle();
+        LocalDate startDate = findArticlePageListReqVO.getStartDate();
+        LocalDate endDate = findArticlePageListReqVO.getEndDate();
+
+        long pageNo = findArticlePageListReqVO.getPageNo();
+
+        long pageSize = 10;
+
+        long totalCount = articleDOMapper.selectCountByTitleInTargetTime(title,startDate,endDate);
+
+        if(totalCount == 0){
+            return PageResponse.success(null,pageNo,totalCount,pageSize);
+        }
+
+        long offset = PageResponse.getOffset(pageNo,pageSize);
+
+        //模糊分页查询
+        List<ArticleDO> articleDOS = articleDOMapper.selectArticleByTitleInTargetTime(title,startDate,endDate,offset,pageSize);
+
+        //再判定一次，因为可能有"分类总数不为空，但是指定查询的页码大于最大页码，查到空数据"的情况
+        if(CollectionUtils.isEmpty(articleDOS)){
+            return PageResponse.success(null,pageNo,totalCount,pageSize);
+        }
+
+        //DO转VO
+        List<FindArticlePageListRspVO> findArticlePageListRspVOS = null;
+        findArticlePageListRspVOS = articleDOS.stream()
+                .map(articleDO -> FindArticlePageListRspVO.builder()
+                        .id(articleDO.getId())
+                        .title(articleDO.getTitle())
+                        .cover(articleDO.getCover())
+                        .createTime(articleDO.getCreateTime())
+                        .build())
+                .collect(Collectors.toList());
+
+        return PageResponse.success(findArticlePageListRspVOS,pageNo,totalCount,pageSize);
     }
 }

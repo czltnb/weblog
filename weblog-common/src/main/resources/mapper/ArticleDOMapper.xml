@@ -27,4 +27,35 @@
         delete from t_article
         WHERE id = #{id} AND is_deleted = 0
     </delete>
+    <select id="selectCountByTitleInTargetTime" resultType="int">
+        select count(*)
+        from t_article
+        WHERE is_deleted = 0 AND title like concat ('%',#{title},'%')
+        <if test="startDate != null and endDate != null">
+            and create_time between #{startDate} and date_add(#{endDate}, interval 86399 second)
+        </if>
+        <if test="startDate != null and endDate == null">
+            and create_time >= #{startDate}  <!-- 仅限制开始时间，不限制结束时间 -->
+        </if>
+        <if test="startDate == null and endDate != null">
+            and create_time &lt;= date_add(#{endDate}, interval 86399 second)  <!-- 仅限制结束时间，不限制开始时间 -->
+        </if>
+        <!-- 如果两者都为 null，则不添加时间条件 -->
+    </select>
+    <select id="selectArticleByTitleInTargetTime" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0 AND title like concat ('%',#{title},'%')
+        <if test="startDate != null and endDate != null">
+            and create_time between #{startDate} and date_add(#{endDate}, interval 86399 second)
+        </if>
+        <if test="startDate != null and endDate == null">
+            and create_time >= #{startDate}  <!-- 仅限制开始时间，不限制结束时间 -->
+        </if>
+        <if test="startDate == null and endDate != null">
+            and create_time &lt;= date_add(#{endDate}, interval 86399 second)  <!-- 仅限制结束时间，不限制开始时间 -->
+        </if>
+        <!-- 如果两者都为 null，则不添加时间条件 -->
+        limit #{offset},#{pageSize}
+    </select>
 </mapper>

@@ -1,9 +1,11 @@
 package com.czltnb.weblog.admin.controller;
 
 import com.czltnb.weblog.admin.model.vo.article.DeleteArticleReqVO;
+import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
 import com.czltnb.weblog.admin.model.vo.article.PublishArticleReqVO;
 import com.czltnb.weblog.admin.service.AdminArticleService;
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
+import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +39,13 @@ public class AdminArticleController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Response deleteArticle(@RequestBody @Validated DeleteArticleReqVO deleteArticleReqVO) {
         return articleService.deleteArticle(deleteArticleReqVO);
+    }
+
+    @PostMapping("/list")
+    @ApiOperation(value = "文章分页查询")
+    @ApiOperationLog(description = "文章分页查询")
+    public PageResponse findArticlePageList(@RequestBody @Validated FindArticlePageListReqVO findArticlePageListReqVO) {
+        return articleService.findArticlePageList(findArticlePageListReqVO);
     }
 
 }
