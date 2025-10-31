@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.czltnb.weblog.common.domain.mapper.ArticleCategoryRelDOMapper">
+    <resultMap id="BaseResultMap" type="com.czltnb.weblog.common.domain.dos.ArticleCategoryRelDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="article_id" jdbcType="BIGINT" property="articleId"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.czltnb.weblog.common.domain.dos.ArticleCategoryRelDO">
+        insert into t_article_category_rel
+        (article_id,category_id)
+        VALUES
+        (#{articleId},#{categoryId})
+    </insert>
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.czltnb.weblog.common.domain.mapper.ArticleContentDOMapper">
+    <resultMap id="BaseResultMap" type="com.czltnb.weblog.common.domain.dos.ArticleContentDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="article_id" jdbcType="BIGINT" property="articleId"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.czltnb.weblog.common.domain.dos.ArticleContentDO">
+        insert into
+        t_article_content
+        (article_id,content)
+        VALUES
+        (#{articleId},#{content})
+    </insert>
+</mapper>

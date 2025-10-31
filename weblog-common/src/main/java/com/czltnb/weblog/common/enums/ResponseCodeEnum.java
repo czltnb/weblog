@@ -24,6 +24,7 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     TAG_NAME_IS_EXISTED("20007","该标签已经存在，请勿重复添加!"),
     TAG_ID_IS_NOT_EXISTED("20008","该标签不存在"),
     FILE_UPLOAD_FAILED("20009","文件上传失败! "),
+    CATEGORY_NOT_EXISTED("20009", "提交的分类不存在！"),
     ;
 
     // 异常码

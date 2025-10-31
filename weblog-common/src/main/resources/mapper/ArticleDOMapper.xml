@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.czltnb.weblog.common.domain.mapper.ArticleDOMapper">
+    <resultMap id="BaseResultMap" type="com.czltnb.weblog.common.domain.dos.ArticleDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="read_num" jdbcType="BIGINT" property="readNum"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.czltnb.weblog.common.domain.dos.ArticleDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_article
+        (title,cover,summary)
+        VALUES
+        (#{title},#{cover},#{summary})
+    </insert>
+</mapper>
