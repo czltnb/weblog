@@ -24,7 +24,7 @@
         from t_tag
         WHERE is_deleted = 0
     </select>
-    <insert id="insertTag" parameterType="com.czltnb.weblog.common.domain.dos.TagDO">
+    <insert id="insertTag" parameterType="com.czltnb.weblog.common.domain.dos.TagDO" useGeneratedKeys="true" keyProperty="id">
         insert into t_tag
         (name)
         VALUES

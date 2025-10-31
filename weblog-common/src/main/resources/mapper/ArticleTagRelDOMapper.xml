@@ -13,4 +13,12 @@
         VALUES
         (#{articleId},#{tagId})
     </insert>
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into t_article_tag_rel
+        (article_id,tag_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.articleId},#{item.tagId})
+        </foreach>
+    </insert>
 </mapper>

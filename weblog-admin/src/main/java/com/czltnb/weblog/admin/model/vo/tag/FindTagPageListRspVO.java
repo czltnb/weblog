@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,5 +21,5 @@ public class FindTagPageListRspVO {
     private String name;
 
     //创建时间
-    private Date createTime;
+    private LocalDateTime createTime;
 }
