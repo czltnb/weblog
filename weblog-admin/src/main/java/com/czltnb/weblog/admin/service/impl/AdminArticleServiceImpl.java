@@ -1,9 +1,6 @@
 package com.czltnb.weblog.admin.service.impl;
 
-import com.czltnb.weblog.admin.model.vo.article.DeleteArticleReqVO;
-import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
-import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListRspVO;
-import com.czltnb.weblog.admin.model.vo.article.PublishArticleReqVO;
+import com.czltnb.weblog.admin.model.vo.article.*;
 import com.czltnb.weblog.admin.service.AdminArticleService;
 import com.czltnb.weblog.common.domain.dos.*;
 import com.czltnb.weblog.common.domain.mapper.*;
@@ -258,5 +255,36 @@ public class AdminArticleServiceImpl implements AdminArticleService {
                 .collect(Collectors.toList());
 
         return PageResponse.success(findArticlePageListRspVOS,pageNo,totalCount,pageSize);
+    }
+
+    @Override
+    public Response findArticleDetail(FindArticleDetailReqVO findArticleDetailReqVO) {
+        Long articleId = findArticleDetailReqVO.getId();
+
+        ArticleDO articleDO = articleDOMapper.selectArticleById(articleId);
+        if(Objects.isNull(articleDO)){
+            log.warn("==> 该 id 对应的文章不存在: {}",articleId);
+            throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
+        }
+
+        //根据articleId寻找content
+        ArticleContentDO articleContentDO = articleContentDOMapper.selectByArticleId(articleId);
+        //这个地方不用判空吧？？？？
+
+        ArticleCategoryRelDO articleCategoryRelDO = articleCategoryRelDOMapper.selectByArticleId(articleId);
+
+        List<ArticleTagRelDO> articleTagRelDO = articleTagRelDOMapper.batchSelectByArticleId(articleId);
+
+        FindArticleDetailRspVO findArticleDetailRspVO = FindArticleDetailRspVO.builder()
+                .id(articleId)
+                .title(articleDO.getTitle())
+                .cover(articleDO.getCover())
+                .summary(articleDO.getSummary())
+                .content(articleContentDO.getContent())
+                .categoryId(articleCategoryRelDO.getCategoryId())
+                .tagIds(articleTagRelDO.stream().map(ArticleTagRelDO::getTagId).collect(Collectors.toList()))
+                .build();
+
+        return Response.success(findArticleDetailRspVO);
     }
 }

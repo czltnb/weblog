@@ -18,4 +18,9 @@
         delete from t_article_content
         WHERE article_id = #{articleId}
     </delete>
+    <select id="selectByArticleId" resultMap="BaseResultMap">
+        select id,article_id,content
+        from t_article_content
+        WHERE article_id = #{articleId}
+    </select>
 </mapper>

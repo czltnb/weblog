@@ -7,4 +7,6 @@ public interface ArticleContentDOMapper {
     int insert(ArticleContentDO articleContentDO);
 
     int delete(Long articleId);
+
+    ArticleContentDO selectByArticleId(Long articleId);
 }

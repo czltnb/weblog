@@ -17,4 +17,9 @@
         delete from t_article_category_rel
         WHERE article_id = #{articleId}
     </delete>
+    <select id="selectByArticleId" resultMap="BaseResultMap">
+        select id,article_id,category_id
+        from t_article_category_rel
+        WHERE article_id = #{articleId}
+    </select>
 </mapper>

@@ -11,4 +11,6 @@ public interface ArticleTagRelDOMapper {
     int batchInsert(List<ArticleTagRelDO> articleTagRelDOList);
 
     int delete(Long articleId);
+
+    List<ArticleTagRelDO> batchSelectByArticleId(Long articleId);
 }

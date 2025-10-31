@@ -25,4 +25,9 @@
         delete from t_article_tag_rel
         WHERE article_id = #{articleId}
     </delete>
+    <select id="batchSelectByArticleId" resultMap="BaseResultMap">
+        select id,article_id,tag_id
+        from t_article_tag_rel
+        WHERE article_id = #{articleId}
+    </select>
 </mapper>

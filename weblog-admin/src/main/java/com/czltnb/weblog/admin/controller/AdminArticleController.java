@@ -1,6 +1,7 @@
 package com.czltnb.weblog.admin.controller;
 
 import com.czltnb.weblog.admin.model.vo.article.DeleteArticleReqVO;
+import com.czltnb.weblog.admin.model.vo.article.FindArticleDetailReqVO;
 import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
 import com.czltnb.weblog.admin.model.vo.article.PublishArticleReqVO;
 import com.czltnb.weblog.admin.service.AdminArticleService;
@@ -46,6 +47,13 @@ public class AdminArticleController {
     @ApiOperationLog(description = "文章分页查询")
     public PageResponse findArticlePageList(@RequestBody @Validated FindArticlePageListReqVO findArticlePageListReqVO) {
         return articleService.findArticlePageList(findArticlePageListReqVO);
+    }
+
+    @PostMapping("/detail")
+    @ApiOperation(value = "文章详情")
+    @ApiOperationLog(description = "文章详情")
+    public Response findArticleDetail(@RequestBody @Validated FindArticleDetailReqVO findArticleDetailReqVO){
+        return articleService.findArticleDetail(findArticleDetailReqVO);
     }
 
 }

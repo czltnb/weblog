@@ -7,4 +7,6 @@ public interface ArticleCategoryRelDOMapper {
     int insert(ArticleCategoryRelDO articleCategoryRelDO);
 
     int delete(Long articleId);
+
+    ArticleCategoryRelDO selectByArticleId(Long articleId);
 }

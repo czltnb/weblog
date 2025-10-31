@@ -1,6 +1,7 @@
 package com.czltnb.weblog.admin.service;
 
 import com.czltnb.weblog.admin.model.vo.article.DeleteArticleReqVO;
+import com.czltnb.weblog.admin.model.vo.article.FindArticleDetailReqVO;
 import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
 import com.czltnb.weblog.admin.model.vo.article.PublishArticleReqVO;
 import com.czltnb.weblog.common.utils.PageResponse;
@@ -22,4 +23,9 @@ public interface AdminArticleService {
      * 文章分页查询
      */
     PageResponse findArticlePageList(FindArticlePageListReqVO findArticlePageListReqVO);
+
+    /**
+     * 获取文章详情
+     */
+    Response findArticleDetail(FindArticleDetailReqVO findArticleDetailReqVO);
 }
