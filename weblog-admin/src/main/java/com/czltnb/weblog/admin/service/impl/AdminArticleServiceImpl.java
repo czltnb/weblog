@@ -1,5 +1,6 @@
 package com.czltnb.weblog.admin.service.impl;
 
+import com.czltnb.weblog.admin.model.vo.article.DeleteArticleReqVO;
 import com.czltnb.weblog.admin.model.vo.article.PublishArticleReqVO;
 import com.czltnb.weblog.admin.service.AdminArticleService;
 import com.czltnb.weblog.common.domain.dos.*;
@@ -180,5 +181,36 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 
         }
 
+    }
+
+    /**
+     * 彻底删除文章(非逻辑删除)
+     * @param deleteArticleReqVO
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response deleteArticle(DeleteArticleReqVO deleteArticleReqVO) {
+        Long articleId = deleteArticleReqVO.getId();
+
+        //先判断要删除的文章是否存在
+        ArticleDO articleDO = articleDOMapper.selectArticleById(articleId);
+
+        if(Objects.isNull(articleDO)) {
+            log.warn("==> 要删除的文章不存在,文章id为: {}",articleId);
+            throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
+        }
+
+        //1.逻辑删除文章表内容
+        articleDOMapper.delete(articleId);
+
+        //2.删除文章内容表内容
+        articleContentDOMapper.delete(articleId);
+        //3.删除文章-分类表内容
+        articleCategoryRelDOMapper.delete(articleId);
+        //4.删除文章-标签表内容
+        articleTagRelDOMapper.delete(articleId);
+
+        return Response.success();
     }
 }

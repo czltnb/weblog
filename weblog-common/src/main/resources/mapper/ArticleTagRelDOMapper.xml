@@ -21,4 +21,8 @@
             (#{item.articleId},#{item.tagId})
         </foreach>
     </insert>
+    <delete id="delete" parameterType="long">
+        delete from t_article_tag_rel
+        WHERE article_id = #{articleId}
+    </delete>
 </mapper>

@@ -13,4 +13,8 @@
         VALUES
         (#{articleId},#{categoryId})
     </insert>
+    <delete id="delete" parameterType="long">
+        delete from t_article_category_rel
+        WHERE article_id = #{articleId}
+    </delete>
 </mapper>

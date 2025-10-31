@@ -5,4 +5,6 @@ import com.czltnb.weblog.common.domain.dos.ArticleCategoryRelDO;
 public interface ArticleCategoryRelDOMapper {
 
     int insert(ArticleCategoryRelDO articleCategoryRelDO);
+
+    int delete(Long articleId);
 }

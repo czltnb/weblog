@@ -9,4 +9,6 @@ public interface ArticleTagRelDOMapper {
     int insert(ArticleTagRelDO articleTagRelDO);
 
     int batchInsert(List<ArticleTagRelDO> articleTagRelDOList);
+
+    int delete(Long articleId);
 }

@@ -14,4 +14,8 @@
         VALUES
         (#{articleId},#{content})
     </insert>
+    <delete id="delete" parameterType="long">
+        delete from t_article_content
+        WHERE article_id = #{articleId}
+    </delete>
 </mapper>

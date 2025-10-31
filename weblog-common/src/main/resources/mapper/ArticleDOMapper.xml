@@ -18,4 +18,13 @@
         VALUES
         (#{title},#{cover},#{summary})
     </insert>
+    <select id="selectArticleById" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0 AND id = #{id}
+    </select>
+    <delete id="delete" parameterType="long">
+        delete from t_article
+        WHERE id = #{id} AND is_deleted = 0
+    </delete>
 </mapper>
