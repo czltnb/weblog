@@ -66,4 +66,15 @@
         <!-- 如果两者都为 null，则不添加时间条件 -->
         limit #{offset},#{pageSize}
     </select>
+    <select id="selectCount" resultType="int">
+        select count(*)
+        from t_article
+        WHERE is_deleted = 0
+    </select>
+    <select id="selectArticlePageList" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0
+        limit #{offset},#{pageSize}
+    </select>
 </mapper>

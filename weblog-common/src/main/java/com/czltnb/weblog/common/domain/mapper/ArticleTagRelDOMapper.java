@@ -15,4 +15,6 @@ public interface ArticleTagRelDOMapper {
     List<ArticleTagRelDO> batchSelectByArticleId(Long articleId);
 
     ArticleTagRelDO selectOneByTagId(Long tagId);
+
+    List<ArticleTagRelDO> batchSelectByArticleIds(List<Long> articleIds);
 }

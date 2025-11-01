@@ -18,4 +18,8 @@ public interface ArticleDOMapper {
     int selectCountByTitleInTargetTime(String title, LocalDate startDate, LocalDate endDate);
 
     List<ArticleDO> selectArticleByTitleInTargetTime(String title, LocalDate startDate, LocalDate endDate,long offset,long pageSize);
+
+    int selectCount();
+
+    List<ArticleDO> selectArticlePageList(long offset,long pageSize);
 }

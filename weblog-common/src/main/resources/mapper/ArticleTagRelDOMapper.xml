@@ -36,4 +36,12 @@
         WHERE tag_id = #{tagId}
         limit 1
     </select>
+    <select id="batchSelectByArticleIds" resultMap="BaseResultMap" parameterType="list">
+        select id,article_id,tag_id
+        from t_article_tag_rel
+        WHERE article_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

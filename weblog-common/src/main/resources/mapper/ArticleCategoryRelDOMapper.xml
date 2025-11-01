@@ -28,4 +28,12 @@
         WHERE category_id = #{categoryId}
         limit 1
     </select>
+    <select id="batchSelectByArticleIds" resultMap="BaseResultMap" parameterType="list">
+        select id,article_id,category_id
+        from t_article_category_rel
+        WHERE article_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
