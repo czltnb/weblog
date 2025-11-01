@@ -22,4 +22,10 @@
         from t_article_category_rel
         WHERE article_id = #{articleId}
     </select>
+    <select id="selectOneByCategoryId" resultMap="BaseResultMap">
+        select id,article_id,category_id
+        from t_article_category_rel
+        WHERE category_id = #{categoryId}
+        limit 1
+    </select>
 </mapper>

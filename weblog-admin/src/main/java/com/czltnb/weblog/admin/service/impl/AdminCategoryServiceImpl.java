@@ -5,7 +5,9 @@ import com.czltnb.weblog.admin.model.vo.category.DeleteCategoryReqVO;
 import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListReqVO;
 import com.czltnb.weblog.admin.model.vo.category.FindCategoryPageListRspVO;
 import com.czltnb.weblog.admin.service.AdminCategoryService;
+import com.czltnb.weblog.common.domain.dos.ArticleCategoryRelDO;
 import com.czltnb.weblog.common.domain.dos.CategoryDO;
+import com.czltnb.weblog.common.domain.mapper.ArticleCategoryRelDOMapper;
 import com.czltnb.weblog.common.domain.mapper.CategoryDOMapper;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
@@ -27,6 +29,9 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 
     @Autowired
     private CategoryDOMapper categoryDOMapper;
+
+    @Autowired
+    private ArticleCategoryRelDOMapper articleCategoryRelDOMapper;
 
     @Override
     public Response addCategory(AddCategoryReqVO addCategoryReqVO) {
@@ -98,6 +103,14 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         CategoryDO categoryDO = categoryDOMapper.selectById(categoryId);
         if(Objects.isNull(categoryDO)){
             throw new BizException(ResponseCodeEnum.CATEGORY_ID_IS_NOT_EXISTED);
+        }
+
+        // 校验该分类下是否已经有文章，若有，则提示需要先删除分类下所有文章，才能删除
+        ArticleCategoryRelDO articleCategoryRelDO = articleCategoryRelDOMapper.selectOneByCategoryId(categoryId);
+
+        if (Objects.nonNull(articleCategoryRelDO)) {
+            log.warn("==> 此分类下包含文章，无法删除，categoryId: {}", categoryId);
+            throw new BizException(ResponseCodeEnum.CATEGORY_CAN_NOT_DELETE);
         }
 
         //逻辑删除该分类

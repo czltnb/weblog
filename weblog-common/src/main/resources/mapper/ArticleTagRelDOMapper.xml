@@ -30,4 +30,10 @@
         from t_article_tag_rel
         WHERE article_id = #{articleId}
     </select>
+    <select id="selectOneByTagId" resultMap="BaseResultMap">
+        select id,article_id,tag_id
+        from t_article_tag_rel
+        WHERE tag_id = #{tagId}
+        limit 1
+    </select>
 </mapper>

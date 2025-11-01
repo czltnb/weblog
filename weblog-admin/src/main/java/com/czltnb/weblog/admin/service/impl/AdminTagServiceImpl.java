@@ -5,7 +5,9 @@ import com.czltnb.weblog.admin.model.vo.tag.DeleteTagReqVO;
 import com.czltnb.weblog.admin.model.vo.tag.FindTagPageListReqVO;
 import com.czltnb.weblog.admin.model.vo.tag.FindTagPageListRspVO;
 import com.czltnb.weblog.admin.service.AdminTagService;
+import com.czltnb.weblog.common.domain.dos.ArticleTagRelDO;
 import com.czltnb.weblog.common.domain.dos.TagDO;
+import com.czltnb.weblog.common.domain.mapper.ArticleTagRelDOMapper;
 import com.czltnb.weblog.common.domain.mapper.TagDOMapper;
 import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
@@ -27,6 +29,9 @@ public class AdminTagServiceImpl implements AdminTagService {
 
     @Autowired
     private TagDOMapper tagDOMapper;
+
+    @Autowired
+    private ArticleTagRelDOMapper articleTagRelDOMapper;
 
     @Override
     public Response addTag(AddTagReqVO addTagReqVO) {
@@ -85,6 +90,14 @@ public class AdminTagServiceImpl implements AdminTagService {
         TagDO tagDO = tagDOMapper.selectById(tagId);
         if(Objects.isNull(tagDO)){
             throw new BizException(ResponseCodeEnum.TAG_ID_IS_NOT_EXISTED);
+        }
+
+        // 校验该标签下是否有关联的文章，若有，则不允许删除，提示用户需要先删除标签下的文章
+        ArticleTagRelDO articleTagRelDO = articleTagRelDOMapper.selectOneByTagId(tagId);
+
+        if (Objects.nonNull(articleTagRelDO)) {
+            log.warn("==> 此标签下包含文章，无法删除，tagId: {}", tagId);
+            throw new BizException(ResponseCodeEnum.TAG_CAN_NOT_DELETE);
         }
 
         //逻辑删除

@@ -9,4 +9,6 @@ public interface ArticleCategoryRelDOMapper {
     int delete(Long articleId);
 
     ArticleCategoryRelDO selectByArticleId(Long articleId);
+
+    ArticleCategoryRelDO selectOneByCategoryId(Long categoryId);
 }

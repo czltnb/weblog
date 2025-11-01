@@ -13,4 +13,6 @@ public interface ArticleTagRelDOMapper {
     int delete(Long articleId);
 
     List<ArticleTagRelDO> batchSelectByArticleId(Long articleId);
+
+    ArticleTagRelDO selectOneByTagId(Long tagId);
 }
