@@ -77,4 +77,14 @@
         WHERE is_deleted = 0
         limit #{offset},#{pageSize}
     </select>
+    <select id="selectArticlePageListByArticleIds" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0
+        AND id in
+        <foreach collection="articleIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        limit #{offset},#{pageSize}
+    </select>
 </mapper>

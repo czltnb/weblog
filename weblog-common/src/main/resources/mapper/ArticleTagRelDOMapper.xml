@@ -44,4 +44,9 @@
             #{item}
         </foreach>
     </select>
+    <select id="batchSelectByTagId" resultMap="BaseResultMap">
+        select id,article_id,tag_id
+        from t_article_tag_rel
+        WHERE tag_id = #{tagId}
+    </select>
 </mapper>

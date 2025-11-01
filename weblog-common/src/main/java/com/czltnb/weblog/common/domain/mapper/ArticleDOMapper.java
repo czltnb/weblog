@@ -22,4 +22,6 @@ public interface ArticleDOMapper {
     int selectCount();
 
     List<ArticleDO> selectArticlePageList(long offset,long pageSize);
+
+    List<ArticleDO> selectArticlePageListByArticleIds(List<Long> articleIds,long offset,long pageSize);
 }
