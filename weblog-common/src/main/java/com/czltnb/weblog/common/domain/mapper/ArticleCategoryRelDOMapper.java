@@ -15,4 +15,6 @@ public interface ArticleCategoryRelDOMapper {
     ArticleCategoryRelDO selectOneByCategoryId(Long categoryId);
 
     List<ArticleCategoryRelDO> batchSelectByArticleIds(List<Long> articleIds);
+
+    List<ArticleCategoryRelDO> batchSelectByCategoryId(Long categoryId);
 }

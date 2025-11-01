@@ -36,4 +36,9 @@
             #{item}
         </foreach>
     </select>
+    <select id="batchSelectByCategoryId" resultMap="BaseResultMap">
+        select id,article_id,category_id
+        from t_article_category_rel
+        WHERE category_id = #{categoryId}
+    </select>
 </mapper>
