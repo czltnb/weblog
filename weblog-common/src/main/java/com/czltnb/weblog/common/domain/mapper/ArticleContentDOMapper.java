@@ -8,5 +8,7 @@ public interface ArticleContentDOMapper {
 
     int delete(Long articleId);
 
+    int updateByArticleId(ArticleContentDO articleContentDO);
+
     ArticleContentDO selectByArticleId(Long articleId);
 }

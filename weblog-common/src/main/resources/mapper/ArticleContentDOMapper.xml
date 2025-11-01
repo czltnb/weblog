@@ -18,6 +18,11 @@
         delete from t_article_content
         WHERE article_id = #{articleId}
     </delete>
+    <update id="updateByArticleId" parameterType="com.czltnb.weblog.common.domain.dos.ArticleContentDO">
+        update t_article_content set
+        content = #{content}
+        WHERE article_id = #{articleId}
+    </update>
     <select id="selectByArticleId" resultMap="BaseResultMap">
         select id,article_id,content
         from t_article_content

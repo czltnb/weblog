@@ -287,4 +287,62 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 
         return Response.success(findArticleDetailRspVO);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response updateArticle(UpdateArticleReqVO updateArticleReqVO) {
+        Long articleId = updateArticleReqVO.getId();
+
+        //先查询要更新的文章是否存在
+        ArticleDO articleDO = articleDOMapper.selectArticleById(articleId);
+
+        if(Objects.isNull(articleDO)){
+            log.warn("==> 要查询的文章不存在，文章 ID: {}",articleId);
+            throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
+        }
+
+        //1.文章元数据更新
+        ArticleDO updateArticleDO = ArticleDO.builder()
+                .id(articleId)
+                .title(updateArticleReqVO.getTitle())
+                .cover(updateArticleReqVO.getCover())
+                .summary(updateArticleReqVO.getSummary())
+                .updateTime(LocalDateTime.now())
+                .build();
+
+        articleDOMapper.updateArticleById(updateArticleDO);
+
+        //2.文章内容更新
+        ArticleContentDO updateArticleContentDO = ArticleContentDO.builder()
+                .articleId(articleId)
+                .content(updateArticleReqVO.getContent())
+                .build();
+
+        articleContentDOMapper.updateByArticleId(updateArticleContentDO);
+
+        //3.文章分类更新
+        Long categoryId = updateArticleReqVO.getCategoryId();
+        //检查该分类是否存在
+        CategoryDO categoryDO = categoryDOMapper.selectById(categoryId);
+        if(Objects.isNull(categoryDO)){
+            log.warn("==> 该文章分类不存在，categoryId : {}",categoryId);
+            throw new BizException(ResponseCodeEnum.CATEGORY_NOT_EXISTED);
+        }
+
+        // 先删除该文章关联的分类记录，再插入新的关联关系
+        articleCategoryRelDOMapper.delete(articleId);
+        ArticleCategoryRelDO articleCategoryRelDO = ArticleCategoryRelDO.builder()
+                .articleId(articleId)
+                .categoryId(categoryId)
+                .build();
+        articleCategoryRelDOMapper.insert(articleCategoryRelDO);
+
+        //4.文章关联的标签集合更新
+        //先删除对应的标签，再插入
+        articleTagRelDOMapper.delete(articleId);
+        List<String> publishTags = updateArticleReqVO.getTags();
+        insertTags(articleId,publishTags);
+
+        return Response.success();
+    }
 }

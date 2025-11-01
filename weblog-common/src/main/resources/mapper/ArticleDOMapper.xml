@@ -27,6 +27,14 @@
         delete from t_article
         WHERE id = #{id} AND is_deleted = 0
     </delete>
+    <update id="updateArticleById" parameterType="com.czltnb.weblog.common.domain.dos.ArticleDO">
+        update t_article set
+        title = #{title},
+        cover = #{cover},
+        summary = #{summary},
+        update_time = #{updateTime}
+        WHERE id = #{id} AND is_deleted = 0
+    </update>
     <select id="selectCountByTitleInTargetTime" resultType="int">
         select count(*)
         from t_article

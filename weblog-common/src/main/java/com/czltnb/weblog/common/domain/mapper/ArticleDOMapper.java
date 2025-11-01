@@ -13,6 +13,8 @@ public interface ArticleDOMapper {
 
     int delete(Long id);
 
+    int updateArticleById(ArticleDO article);
+
     int selectCountByTitleInTargetTime(String title, LocalDate startDate, LocalDate endDate);
 
     List<ArticleDO> selectArticleByTitleInTargetTime(String title, LocalDate startDate, LocalDate endDate,long offset,long pageSize);
