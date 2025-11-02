@@ -108,4 +108,9 @@
         read_num = read_num + 1
         WHERE id = #{articleId} AND is_deleted = 0
     </update>
+    <select id="selectAllReadNum" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0
+    </select>
 </mapper>

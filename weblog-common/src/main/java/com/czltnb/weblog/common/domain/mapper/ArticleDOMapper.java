@@ -30,4 +30,9 @@ public interface ArticleDOMapper {
     ArticleDO selectNextArticle(Long articleId);
 
     int increaseReadNum(Long articleId);
+
+    /**
+     * 查询所有文章的总阅读量
+     */
+    List<ArticleDO> selectAllReadNum();
 }

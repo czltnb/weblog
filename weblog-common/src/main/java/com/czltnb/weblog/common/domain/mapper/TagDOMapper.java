@@ -30,4 +30,6 @@ public interface TagDOMapper {
 
     //逻辑删除，修改分类的 is_deleted字段
     int deleteTagById(@Param("id") Long id);
+
+    int selectCount();
 }

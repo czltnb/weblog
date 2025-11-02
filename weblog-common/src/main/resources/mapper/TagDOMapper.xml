@@ -54,4 +54,9 @@
         set is_deleted = 1
         WHERE is_deleted = 0 AND id = #{id}
     </update>
+    <select id="selectCount" resultType="int">
+        select count(*)
+        from t_tag
+        WHERE is_deleted = 0
+    </select>
 </mapper>

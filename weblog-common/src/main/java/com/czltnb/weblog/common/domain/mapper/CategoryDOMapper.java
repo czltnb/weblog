@@ -30,4 +30,6 @@ public interface CategoryDOMapper {
 
     //逻辑删除，修改分类的 is_deleted字段
     int deleteCategoryById(@Param("id") Long id);
+
+    int selectCount();
 }
