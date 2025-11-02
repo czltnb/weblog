@@ -1,5 +1,6 @@
 package com.czltnb.weblog.web.service.impl;
 
+import com.czltnb.weblog.admin.event.ReadArticleEvent;
 import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
 import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListRspVO;
 import com.czltnb.weblog.common.domain.dos.*;
@@ -15,6 +16,7 @@ import com.czltnb.weblog.web.service.ArticleService;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -41,6 +43,9 @@ public class ArticleServiceImpl implements ArticleService {
     private TagDOMapper tagDOMapper;
     @Autowired
     private ArticleTagRelDOMapper articleTagRelDOMapper;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     public PageResponse findArticlePageList(FindIndexArticlePageListReqVO findIndexArticlePageListReqVO){
@@ -222,6 +227,9 @@ public class ArticleServiceImpl implements ArticleService {
                     .build();
             vo.setNextArticle(nextArticleRspVO);
         }
+
+        // 发布文章阅读事件
+        eventPublisher.publishEvent(new ReadArticleEvent(this, articleId));
 
         return Response.success(vo);
     }

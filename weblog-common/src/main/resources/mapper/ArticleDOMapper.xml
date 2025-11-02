@@ -103,4 +103,9 @@
         ORDER BY id ASC
         limit 1
     </select>
+    <update id="increaseReadNum" parameterType="long">
+        update t_article set
+        read_num = read_num + 1
+        WHERE id = #{articleId} AND is_deleted = 0
+    </update>
 </mapper>

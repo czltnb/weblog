@@ -28,4 +28,6 @@ public interface ArticleDOMapper {
     ArticleDO selectPreArticle(Long articleId);
 
     ArticleDO selectNextArticle(Long articleId);
+
+    int increaseReadNum(Long articleId);
 }
