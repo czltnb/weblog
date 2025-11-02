@@ -2,6 +2,8 @@ package com.czltnb.weblog.web.controller;
 
 import com.czltnb.weblog.common.aspect.ApiOperationLog;
 import com.czltnb.weblog.common.utils.PageResponse;
+import com.czltnb.weblog.common.utils.Response;
+import com.czltnb.weblog.web.model.vo.article.FindArticleDetailReqVO;
 import com.czltnb.weblog.web.model.vo.article.FindIndexArticlePageListReqVO;
 import com.czltnb.weblog.web.service.ArticleService;
 import io.swagger.annotations.Api;
@@ -24,5 +26,12 @@ public class ArticleController {
     @ApiOperationLog(description = "获取首页文章分页数据")
     public PageResponse findArticlePageList(@RequestBody @Validated FindIndexArticlePageListReqVO findIndexArticlePageListReqVO){
         return articleService.findArticlePageList(findIndexArticlePageListReqVO);
+    }
+
+    @PostMapping("/detail")
+    @ApiOperation(value = "获取文章详情")
+    @ApiOperationLog(description = "获取文章详情")
+    public Response findArticleDetail(@RequestBody FindArticleDetailReqVO findArticleDetailReqVO) {
+        return articleService.findArticleDetail(findArticleDetailReqVO);
     }
 }

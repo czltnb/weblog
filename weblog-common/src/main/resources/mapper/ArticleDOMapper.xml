@@ -87,4 +87,20 @@
         </foreach>
         limit #{offset},#{pageSize}
     </select>
+    <select id="selectPreArticle" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0
+        AND id &lt; #{articleId}
+        ORDER BY id DESC
+        limit 1
+    </select>
+    <select id="selectNextArticle" resultMap="BaseResultMap">
+        select *
+        from t_article
+        WHERE is_deleted = 0
+        AND id > #{articleId}
+        ORDER BY id ASC
+        limit 1
+    </select>
 </mapper>

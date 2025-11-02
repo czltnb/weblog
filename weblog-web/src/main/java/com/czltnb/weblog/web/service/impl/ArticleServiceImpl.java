@@ -4,10 +4,11 @@ import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListReqVO;
 import com.czltnb.weblog.admin.model.vo.article.FindArticlePageListRspVO;
 import com.czltnb.weblog.common.domain.dos.*;
 import com.czltnb.weblog.common.domain.mapper.*;
+import com.czltnb.weblog.common.enums.ResponseCodeEnum;
+import com.czltnb.weblog.common.exception.BizException;
 import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
-import com.czltnb.weblog.web.model.vo.article.FindIndexArticlePageListReqVO;
-import com.czltnb.weblog.web.model.vo.article.FindIndexArticlePageListRspVO;
+import com.czltnb.weblog.web.model.vo.article.*;
 import com.czltnb.weblog.web.model.vo.category.FindCategoryListRspVO;
 import com.czltnb.weblog.web.model.vo.tag.FindTagListRspVO;
 import com.czltnb.weblog.web.service.ArticleService;
@@ -151,6 +152,78 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         return PageResponse.success(findIndexArticlePageListRspVOS,pageNo,totalCount,pageSize);
+    }
+
+    /**
+     * 获取文章详情
+     *
+     * @param findArticleDetailReqVO
+     * @return
+     */
+    @Override
+    public Response findArticleDetail(FindArticleDetailReqVO findArticleDetailReqVO) {
+        Long articleId = findArticleDetailReqVO.getArticleId();
+
+        ArticleDO articleDO = articleDOMapper.selectArticleById(articleId);
+
+        //判断文章是否存在
+        if(Objects.isNull(articleDO)){
+            log.warn("==> 该文章不存在, articleId: {}", articleId);
+            throw new BizException(ResponseCodeEnum.ARTICLE_NOT_EXISTED);
+        }
+
+        //查询正文
+        ArticleContentDO articleContentDO = articleContentDOMapper.selectByArticleId(articleId);
+
+        //DO转VO
+        FindArticleDetailRspVO vo = FindArticleDetailRspVO.builder()
+                .title(articleDO.getTitle())
+                .createTime(articleDO.getCreateTime())
+                .content(articleContentDO.getContent())
+                .readNum(articleDO.getReadNum())
+                .build();
+
+        //查询所属分类
+        ArticleCategoryRelDO articleCategoryRelDO = articleCategoryRelDOMapper.selectByArticleId(articleId);
+        CategoryDO categoryDO = categoryDOMapper.selectById(articleCategoryRelDO.getCategoryId());
+        vo.setCategoryId(categoryDO.getId());
+        vo.setCategoryName(categoryDO.getName());
+
+        //查询标签
+        List<ArticleTagRelDO> articleTagRelDOS = articleTagRelDOMapper.batchSelectByArticleId(articleId);
+        List<Long> tagIds = articleTagRelDOS.stream().map(ArticleTagRelDO::getTagId).collect(Collectors.toList());
+        if(!tagIds.isEmpty()) {
+            List<TagDO> tagDOS = tagDOMapper.selectByIds(tagIds);
+
+            //标签DO转VO
+            List<FindTagListRspVO> tagListRspVOS = tagDOS.stream()
+                    .map(tagDO -> FindTagListRspVO.builder().id(tagDO.getId()).name(tagDO.getName()).build())
+                    .collect(Collectors.toList());
+            vo.setTags(tagListRspVOS);
+        }
+
+
+        //上一篇
+        ArticleDO preArticleDO = articleDOMapper.selectPreArticle(articleId);
+        if(Objects.nonNull(preArticleDO)){
+            FindPreNextArticleRspVO preArticleVO = FindPreNextArticleRspVO.builder()
+                    .articleId(preArticleDO.getId())
+                    .articleTitle(preArticleDO.getTitle())
+                    .build();
+            vo.setPreArticle(preArticleVO);
+        }
+
+        //下一篇
+        ArticleDO nextArticleDO = articleDOMapper.selectNextArticle(articleId);
+        if(Objects.nonNull(nextArticleDO)){
+            FindPreNextArticleRspVO nextArticleRspVO = FindPreNextArticleRspVO.builder()
+                    .articleId(nextArticleDO.getId())
+                    .articleTitle(nextArticleDO.getTitle())
+                    .build();
+            vo.setNextArticle(nextArticleRspVO);
+        }
+
+        return Response.success(vo);
     }
 
 

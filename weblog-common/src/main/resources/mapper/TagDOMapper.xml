@@ -19,6 +19,14 @@
         from t_tag
         WHERE is_deleted = 0 AND id = #{id}
     </select>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select id,name,create_time,update_time
+        from t_tag
+        WHERE is_deleted = 0 AND id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
     <select id="selectAll" resultMap="BaseResultMap">
         select id,name,create_time,update_time
         from t_tag

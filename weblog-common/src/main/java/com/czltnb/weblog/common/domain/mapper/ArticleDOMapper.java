@@ -24,4 +24,8 @@ public interface ArticleDOMapper {
     List<ArticleDO> selectArticlePageList(long offset,long pageSize);
 
     List<ArticleDO> selectArticlePageListByArticleIds(List<Long> articleIds,long offset,long pageSize);
+
+    ArticleDO selectPreArticle(Long articleId);
+
+    ArticleDO selectNextArticle(Long articleId);
 }

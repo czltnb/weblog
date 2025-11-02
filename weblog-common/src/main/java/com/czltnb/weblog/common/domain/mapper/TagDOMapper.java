@@ -11,6 +11,8 @@ public interface TagDOMapper {
 
     TagDO selectById(Long id);
 
+    List<TagDO> selectByIds(List<Long> ids);
+
     List<TagDO> selectAll();
 
     int insertTag(TagDO tag);
