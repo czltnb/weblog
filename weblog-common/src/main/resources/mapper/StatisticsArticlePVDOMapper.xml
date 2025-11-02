@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.czltnb.weblog.common.domain.mapper.StatisticsArticlePVDOMapper">
+    <resultMap id="BaseResultMap" type="com.czltnb.weblog.common.domain.dos.StatisticsArticlePVDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="pv_date" jdbcType="DATE" property="pvDate"/>
+        <result column="pv_count" jdbcType="BIGINT" property="pvCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.czltnb.weblog.common.domain.dos.StatisticsArticlePVDO">
+        INSERT INTO t_statistics_article_pv (
+            pv_date,
+            pv_count,
+            create_time,
+            update_time
+        ) VALUES (
+                     #{pvDate},
+                     #{pvCount},
+                     #{createTime},
+                     #{updateTime}
+                 )
+    </insert>
+    <update id="increasePVCount" parameterType="java.time.LocalDate">
+        UPDATE t_statistics_article_pv
+        SET pv_count = pv_count + 1,
+        update_time = NOW()  <!-- 更新时间戳 -->
+        WHERE pv_date = #{currDate}
+    </update>
+</mapper>

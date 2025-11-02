@@ -42,7 +42,7 @@ class WeblogWebApplicationTests {
                 .isDeleted(false)
                 .build();
 
-        userDOMapper.insert(userDO);
+//        userDOMapper.insert(userDO);
     }
 
 }
