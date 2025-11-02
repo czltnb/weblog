@@ -119,4 +119,11 @@
         WHERE create_time >= #{startDate} AND create_time &lt; #{endDate}
         GROUP BY DATE(create_time)
     </select>
+    <select id="selectLatestWeekRecords" resultType="com.czltnb.weblog.common.domain.dos.StatisticsArticlePVDO">
+        select id, pv_date, pv_count, create_time, update_time
+        from t_statistics_article_pv
+        where pv_date &lt; DATE_ADD(CURDATE(), INTERVAL 1 DAY)  <!-- 小于明天（即 <= 今天） -->
+        order by pv_date desc  <!-- 按日期倒序 -->
+        limit 7  <!-- 最多返回7条记录 -->
+    </select>
 </mapper>

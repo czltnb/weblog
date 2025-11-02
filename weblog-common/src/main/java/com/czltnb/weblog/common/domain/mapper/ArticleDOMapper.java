@@ -2,6 +2,7 @@ package com.czltnb.weblog.common.domain.mapper;
 
 import com.czltnb.weblog.common.domain.dos.ArticleDO;
 import com.czltnb.weblog.common.domain.dos.ArticlePublishCountDO;
+import com.czltnb.weblog.common.domain.dos.StatisticsArticlePVDO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -38,4 +39,10 @@ public interface ArticleDOMapper {
     List<ArticleDO> selectAllReadNum();
 
     List<ArticlePublishCountDO> selectDateArticlePublishCount(LocalDate startDate, LocalDate endDate);
+
+    /**
+     * 获取最近七天的 PV 访问记录
+     * @return
+     */
+    List<StatisticsArticlePVDO> selectLatestWeekRecords();
 }

@@ -1,13 +1,17 @@
 package com.czltnb.weblog.admin.service.impl;
 
+import com.czltnb.weblog.admin.model.vo.dashboard.FindDashboardPVStatisticsInfoRspVO;
 import com.czltnb.weblog.admin.model.vo.dashboard.FindDashboardStatisticsInfoRspVO;
 import com.czltnb.weblog.admin.service.AdminDashboardService;
+import com.czltnb.weblog.common.constant.Constants;
 import com.czltnb.weblog.common.domain.dos.ArticleDO;
 import com.czltnb.weblog.common.domain.dos.ArticlePublishCountDO;
+import com.czltnb.weblog.common.domain.dos.StatisticsArticlePVDO;
 import com.czltnb.weblog.common.domain.mapper.ArticleDOMapper;
 import com.czltnb.weblog.common.domain.mapper.CategoryDOMapper;
 import com.czltnb.weblog.common.domain.mapper.TagDOMapper;
 import com.czltnb.weblog.common.utils.Response;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,5 +115,49 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         }
 
         return Response.success(map);
+    }
+
+    /**
+     * 获取文章最近一周 PV 访问量统计信息
+     *
+     * @return
+     */
+    @Override
+    public Response findDashboardPVStatistics() {
+        //查询最近一周的 PV 访问量记录
+        List<StatisticsArticlePVDO> articlePVDOS = articleDOMapper.selectLatestWeekRecords();
+
+        Map<LocalDate,Long> pvDateCountMap = Maps.newHashMap();
+        if(!CollectionUtils.isEmpty(articlePVDOS)) {
+            //转 Map，方便后续通过日期获取 PV 访问量
+            pvDateCountMap = articlePVDOS.stream().collect(Collectors.toMap(StatisticsArticlePVDO::getPvDate,StatisticsArticlePVDO::getPvCount));
+        }
+
+        FindDashboardPVStatisticsInfoRspVO vo = null;
+
+        //日期集合
+        List<String> pvDates = Lists.newArrayList();
+        //PV集合
+        List<Long> pvCounts = Lists.newArrayList();
+
+        //当前日期
+        LocalDate currDate = LocalDate.now();
+        //一周前
+        LocalDate tmpDate = currDate.minusWeeks(1);
+        // 从一周前开始循环
+        for (; tmpDate.isBefore(currDate) || tmpDate.isEqual(currDate); tmpDate = tmpDate.plusDays(1)) {
+            // 设置对应日期的 PV 访问量
+            pvDates.add(tmpDate.format(Constants.MONTH_DAY_FORMATTER));
+            Long pvCount = pvDateCountMap.get(tmpDate);
+            pvCounts.add(Objects.isNull(pvCount) ? 0 : pvCount);
+        }
+
+        vo = FindDashboardPVStatisticsInfoRspVO.builder()
+                .pvDates(pvDates)
+                .pvCounts(pvCounts)
+                .build();
+
+        return Response.success(vo);
+
     }
 }
