@@ -25,4 +25,11 @@ public class AdminDashboardController {
         return dashboardService.findDashboardStatistics();
     }
 
+    @PostMapping("/publishArticle/statistics")
+    @ApiOperation(value = "获取后台仪表盘文章发布热点统计信息")
+    @ApiOperationLog(description = "获取后台仪表盘文章发布热点统计信息")
+    public Response findDashboardPublishArticleStatistics() {
+        return dashboardService.findDashboardPublishArticleStatistics();
+    }
+
 }

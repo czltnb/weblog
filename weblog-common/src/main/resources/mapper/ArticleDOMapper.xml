@@ -113,4 +113,10 @@
         from t_article
         WHERE is_deleted = 0
     </select>
+    <select id="selectDateArticlePublishCount" resultType="com.czltnb.weblog.common.domain.dos.ArticlePublishCountDO">
+        select DATE(create_time) AS date,COUNT(*) AS count
+        FROM t_article
+        WHERE create_time >= #{startDate} AND create_time &lt; #{endDate}
+        GROUP BY DATE(create_time)
+    </select>
 </mapper>

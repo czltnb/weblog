@@ -1,6 +1,7 @@
 package com.czltnb.weblog.common.domain.mapper;
 
 import com.czltnb.weblog.common.domain.dos.ArticleDO;
+import com.czltnb.weblog.common.domain.dos.ArticlePublishCountDO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,4 +36,6 @@ public interface ArticleDOMapper {
      * 查询所有文章的总阅读量
      */
     List<ArticleDO> selectAllReadNum();
+
+    List<ArticlePublishCountDO> selectDateArticlePublishCount(LocalDate startDate, LocalDate endDate);
 }
