@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * @author: czltnb
- * @url: www.quanxiaoha.com
+ * @url: www.czltnb.com
  * @date: 2023-08-24 16:45
  * @description: 认证功能相关配置
  **/

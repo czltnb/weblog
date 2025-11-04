@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public PageResponse findCategoryArticlePageList(FindCategoryArticlePageListReqVO findCategoryArticlePageListReqVO) {
         long pageNo = findCategoryArticlePageListReqVO.getPageNo();
-        long pageSize = 10;
+        long pageSize = findCategoryArticlePageListReqVO.getPageSize();
 
         long offset = PageResponse.getOffset(pageNo, pageSize);
 

@@ -34,7 +34,7 @@ public class AdminCategoryController {
     /**
      * 分页查询接口
      */
-    @PostMapping("/category/findPageList")
+    @PostMapping("/category/list")
     @ApiOperation(value = "分类名分页查询")
     @ApiOperationLog(description = "文章分类名分页查询")
     public PageResponse findCategoryPageList(@RequestBody @Validated FindCategoryPageListReqVO findCategoryPageListReqVO){

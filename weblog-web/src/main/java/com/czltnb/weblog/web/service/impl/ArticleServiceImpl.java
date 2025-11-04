@@ -9,6 +9,7 @@ import com.czltnb.weblog.common.enums.ResponseCodeEnum;
 import com.czltnb.weblog.common.exception.BizException;
 import com.czltnb.weblog.common.utils.PageResponse;
 import com.czltnb.weblog.common.utils.Response;
+import com.czltnb.weblog.web.markdown.MarkdownHelper;
 import com.czltnb.weblog.web.model.vo.article.*;
 import com.czltnb.weblog.web.model.vo.category.FindCategoryListRspVO;
 import com.czltnb.weblog.web.model.vo.tag.FindTagListRspVO;
@@ -184,7 +185,7 @@ public class ArticleServiceImpl implements ArticleService {
         FindArticleDetailRspVO vo = FindArticleDetailRspVO.builder()
                 .title(articleDO.getTitle())
                 .createTime(articleDO.getCreateTime())
-                .content(articleContentDO.getContent())
+                .content(MarkdownHelper.convertMarkdown2Html(articleContentDO.getContent()))
                 .readNum(articleDO.getReadNum())
                 .build();
 

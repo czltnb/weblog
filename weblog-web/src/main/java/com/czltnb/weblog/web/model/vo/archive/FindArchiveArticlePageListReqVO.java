@@ -18,4 +18,7 @@ public class FindArchiveArticlePageListReqVO {
     @NotNull(message = "页码不能为空")
     private  Integer pageNo = 1;
 
+    @NotNull(message = "每页尺寸不能为空")
+    private Integer pageSize;
+
 }

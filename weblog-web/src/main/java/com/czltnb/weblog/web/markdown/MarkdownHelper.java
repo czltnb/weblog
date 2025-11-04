@@ -76,19 +76,19 @@ public class MarkdownHelper {
 //                "| Content Cell  | Content Cell  |\n" +
 //                "| Content Cell  | Content Cell  |";
 //        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
-//        String markdown = "# 一级标题\n" +
-//                "## 二级标题\n";
-//        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
+        String markdown = "# 一级标题\n" +
+                "## 二级标题\n";
+        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
 //        String markdown = "![text](/url.png){width=640 height=480}";
 //        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
-//        String markdown = "[个人网站域名](http://www.quanxiaoha.com \"个人网站域名\")\n" +
+//        String markdown = "[个人网站域名](http://www.czltnb.com \"个人网站域名\")\n" +
 //                "\n" +
 //                "[第三方网站域名](http://www.baidu.com \"第三方网站域名\")";
 //        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
-//        String markdown = "![图 1-1 技术栈](https://img.quanxiaoha.com/quanxiaoha/169560181378937 \"图 1-1 技术栈\")";
+//        String markdown = "![图 1-1 技术栈](https://img.czltnb.com/czltnb/169560181378937 \"图 1-1 技术栈\")";
 //        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
-        String markdown = "![图 1-1 技术栈](https://img.quanxiaoha.com/quanxiaoha/169560181378937 \"图 1-1 技术栈\"){width=100 height=100}";
-        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
+//        String markdown = "![图 1-1 技术栈](https://img.czltnb.com/czltnb/169560181378937 \"图 1-1 技术栈\"){width=100 height=100}";
+//        System.out.println(MarkdownHelper.convertMarkdown2Html(markdown));
 
     }
 

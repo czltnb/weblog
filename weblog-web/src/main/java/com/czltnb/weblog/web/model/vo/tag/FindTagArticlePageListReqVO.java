@@ -22,4 +22,7 @@ public class FindTagArticlePageListReqVO {
     @NotNull(message = "页码不能为空")
     private Integer pageNo;
 
+    @NotNull(message = "每页尺寸不能为空")
+    private Integer pageSize;
+
 }

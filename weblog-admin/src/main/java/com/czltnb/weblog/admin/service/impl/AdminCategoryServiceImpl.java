@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         String categoryName = findCategoryPageListReqVO.getName();
         long pageNo = findCategoryPageListReqVO.getPageNo(); //当前页码
 
-        long pageSize = 4;//定义每页数据量为 4
+        long pageSize = findCategoryPageListReqVO.getPageSize();//定义每页数据量为 4
 
         //如果传入的name名字为空，则模糊查询条件为"%%"就返回所有数据
         //不为空，则正常模糊查询
@@ -73,8 +74,12 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 
         long offset = PageResponse.getOffset(pageNo, pageSize);
 
+        LocalDate startDate = findCategoryPageListReqVO.getStartDate();
+        LocalDate endDate = findCategoryPageListReqVO.getEndDate();
+
         //模糊分页查询
-        List<CategoryDO> categoryDOS = categoryDOMapper.selectPageListByCategoryName(categoryName, offset,pageSize);
+//        List<CategoryDO> categoryDOS = categoryDOMapper.selectPageListByCategoryName(categoryName, offset,pageSize);
+        List<CategoryDO> categoryDOS = categoryDOMapper.selectPageListByCategoryNameInTargetTime(categoryName,offset,pageSize,startDate,endDate);
 
 
         //再判定一次，因为可能有"分类总数不为空，但是指定查询的页码大于最大页码，查到空数据"的情况

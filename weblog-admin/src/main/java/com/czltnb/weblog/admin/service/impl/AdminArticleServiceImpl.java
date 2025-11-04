@@ -105,13 +105,23 @@ public class AdminArticleServiceImpl implements AdminArticleService {
             notExistTags = publishTags;
         } else {
             //数据库中存在的tags
-            List<String> tagNames = tagDOS.stream().map(tagDO -> tagDO.getName()).collect(Collectors.toList());
+//            List<String> tagNames = tagDOS.stream().map(tagDO -> tagDO.getName()).collect(Collectors.toList());
+//
+//            //注意filter的使用，别和map()方法搞混了
+//            //从用户输入的标签中，提炼出数据库中已经存在的
+//            existedTags = publishTags.stream().filter(tagName -> tagNames.contains(tagName)).collect(Collectors.toList());
+//            //提炼出数据库中不存在的
+//            notExistTags = publishTags.stream().filter(tagName -> !tagNames.contains(tagName)).collect(Collectors.toList());
 
-            //注意filter的使用，别和map()方法搞混了
-            //从用户输入的标签中，提炼出数据库中已经存在的
-            existedTags = publishTags.stream().filter(tagName -> tagNames.contains(tagName)).collect(Collectors.toList());
-            //提炼出数据库中不存在的
-            notExistTags = publishTags.stream().filter(tagName -> !tagNames.contains(tagName)).collect(Collectors.toList());
+
+            List<String> tagIds = tagDOS.stream().map(tagDO -> String.valueOf(tagDO.getId())).collect(Collectors.toList());
+            // 表中已添加相关标签，则需要筛选
+            // 通过标签 ID 来筛选，包含对应 ID 则表示提交的标签是表中存在的
+            existedTags = publishTags.stream().filter(publishTag -> tagIds.contains(publishTag)).collect(Collectors.toList());
+            // 否则则是不存在的
+            notExistTags = publishTags.stream().filter(publishTag -> !tagIds.contains(publishTag)).collect(Collectors.toList());
+
+
 
             // 补充逻辑：
             // 还有一种可能：按字符串名称提交上来的标签，也有可能是表中已存在的，比如数据库表中已经有了 Java 标签，用户提交了个 java 小写的标签
@@ -133,31 +143,63 @@ public class AdminArticleServiceImpl implements AdminArticleService {
                     // 从notExistTags集合中清除
                     iterator.remove();
                     // 并将对应的 Name 添加到已存在的标签集合existedTags
-                    existedTags.add(notExistTagLower);
+//                    existedTags.add(notExistTagLower);
+                    // 并将对应的 ID 添加到已存在的标签集合
+                    existedTags.add(String.valueOf(tagNameIdMap.get(notExistTag.toLowerCase())));
                 }
             }
 
             //I.对于数据库中存在的标签，只需存入文章-标签关联表
             if(!CollectionUtils.isEmpty(existedTags)) {
+//                List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
+//                existedTags.forEach(tagName -> {
+//                    /**
+//                     * 先把tagName转化为小写，因为tagNameIdMap的键，都是小写的key
+//                     * 这一步很重要！！！！
+//                     */
+//                    String tagNameLover = tagName.toLowerCase();
+//                    ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
+//                            .articleId(articleId)
+//                            .tagId(tagNameIdMap.get(tagNameLover))
+//                            .build();
+//                    articleTagRelDOS.add(articleTagRelDO);
+//                });
+                //批量插入
                 List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
-                existedTags.forEach(tagName -> {
-                    /**
-                     * 先把tagName转化为小写，因为tagNameIdMap的键，都是小写的key
-                     * 这一步很重要！！！！
-                     */
-                    String tagNameLover = tagName.toLowerCase();
+                existedTags.forEach(tagId -> {
                     ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
                             .articleId(articleId)
-                            .tagId(tagNameIdMap.get(tagNameLover))
+                            .tagId(Long.valueOf(tagId))
                             .build();
                     articleTagRelDOS.add(articleTagRelDO);
                 });
-                //批量插入
                 articleTagRelDOMapper.batchInsert(articleTagRelDOS);
             }
 
             //II.对于数据库中不存在的标签，先存入标签表、再存入文章-标签表
             if(!CollectionUtils.isEmpty(notExistTags)) {
+//                List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
+//                notExistTags.forEach(tagName -> {
+//                    TagDO tagDO = TagDO.builder()
+//                            .name(tagName)
+//                            .createTime(LocalDateTime.now())
+//                            .updateTime(LocalDateTime.now())
+//                            .build();
+//                    tagDOMapper.insertTag(tagDO);
+//
+//                    //拿到保存的标签ID
+//                    Long tagId = tagDO.getId();
+//
+//                    //文章-标签关联入库
+//                    ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
+//                            .articleId(articleId)
+//                            .tagId(tagId)
+//                            .build();
+//                    articleTagRelDOS.add(articleTagRelDO);
+//                });
+                //批量插入
+
+                // 需要先将标签入库，拿到对应标签 ID 后，再把文章-标签关联关系入库
                 List<ArticleTagRelDO> articleTagRelDOS = Lists.newArrayList();
                 notExistTags.forEach(tagName -> {
                     TagDO tagDO = TagDO.builder()
@@ -165,19 +207,19 @@ public class AdminArticleServiceImpl implements AdminArticleService {
                             .createTime(LocalDateTime.now())
                             .updateTime(LocalDateTime.now())
                             .build();
+
                     tagDOMapper.insertTag(tagDO);
 
-                    //拿到保存的标签ID
+                    // 拿到保存的标签 ID
                     Long tagId = tagDO.getId();
 
-                    //文章-标签关联入库
+                    // 文章-标签关联关系
                     ArticleTagRelDO articleTagRelDO = ArticleTagRelDO.builder()
                             .articleId(articleId)
                             .tagId(tagId)
                             .build();
                     articleTagRelDOS.add(articleTagRelDO);
                 });
-                //批量插入
                 articleTagRelDOMapper.batchInsert(articleTagRelDOS);
             }
 

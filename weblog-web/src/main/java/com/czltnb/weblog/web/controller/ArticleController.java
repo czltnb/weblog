@@ -28,7 +28,7 @@ public class ArticleController {
         return articleService.findArticlePageList(findIndexArticlePageListReqVO);
     }
 
-    @PostMapping("/detail")
+    @PostMapping("/article/detail")
     @ApiOperation(value = "获取文章详情")
     @ApiOperationLog(description = "获取文章详情")
     public Response findArticleDetail(@RequestBody FindArticleDetailReqVO findArticleDetailReqVO) {

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -13,8 +14,21 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class FindTagPageListReqVO {
 
-    private String tagName;
+    private String name;
 
     @NotNull(message = "页码不能为空")
     private Integer pageNo = 1;
+
+    @NotNull(message = "分页尺寸不能为空")
+    private Integer pageSize;
+
+    /**
+     * 创建的起始日期，方便按照日期查询
+     */
+    private LocalDate startDate;
+
+    /**
+     * 创建的结束日期
+     */
+    private LocalDate endDate;
 }

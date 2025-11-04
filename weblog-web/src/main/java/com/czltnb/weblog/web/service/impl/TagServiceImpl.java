@@ -68,7 +68,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public Response findTagPageList(FindTagArticlePageListReqVO findTagArticlePageListReqVO) {
         long pageNo = findTagArticlePageListReqVO.getPageNo();
-        long pageSize = 10;
+        long pageSize = findTagArticlePageListReqVO.getPageSize();
 
         long offset = PageResponse.getOffset(pageNo, pageSize);
 

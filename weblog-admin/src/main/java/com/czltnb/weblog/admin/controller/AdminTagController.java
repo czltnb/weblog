@@ -34,7 +34,7 @@ public class AdminTagController {
     /**
      * 分页查询接口
      */
-    @PostMapping("/tag/findPageList")
+    @PostMapping("/tag/list")
     @ApiOperation(value = "标签名分页查询")
     @ApiOperationLog(description = "文章标签名分页查询")
     public PageResponse findTagPageList(@RequestBody @Validated FindTagPageListReqVO findTagPageListReqVO) {

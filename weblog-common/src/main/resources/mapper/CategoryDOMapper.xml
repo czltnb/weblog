@@ -41,6 +41,19 @@
         where is_deleted = 0 AND name like concat ('%',#{name},'%')
         limit #{offset},#{pageSize}
     </select>
+    <select id="selectPageListByCategoryNameInTargetTime" resultMap="BaseResultMap">
+        select id,name,create_time,update_time
+        from t_category
+        where is_deleted = 0 AND name like concat ('%',#{name},'%')
+        <!-- 补充时间范围条件：create_time 大于等于开始时间，小于等于结束时间 -->
+        <if test="startDate != null">
+            AND create_time >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND create_time &lt;= #{endDate}
+        </if>
+        limit #{offset},#{pageSize}
+    </select>
     <update id="deleteCategoryById" parameterType="long">
         update t_category
         set is_deleted = 1

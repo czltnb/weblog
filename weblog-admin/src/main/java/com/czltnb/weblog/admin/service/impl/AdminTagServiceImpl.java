@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -35,29 +36,42 @@ public class AdminTagServiceImpl implements AdminTagService {
 
     @Override
     public Response addTag(AddTagReqVO addTagReqVO) {
-        String tagName = addTagReqVO.getName();
+//        String tagName = addTagReqVO.getName();
 
-        TagDO tagDO = tagDOMapper.selectByName(tagName);
+//        TagDO tagDO = tagDOMapper.selectByName(tagName);
+//
+//        if(Objects.nonNull(tagDO)){
+//            log.warn("标签名称: {}，此标签已经存在，无法重复创建",tagName);
+//            throw new BizException(ResponseCodeEnum.TAG_ID_IS_NOT_EXISTED);
+//        }
+//
+//        TagDO insertTagDO = TagDO.builder()
+//                .name(tagName)
+//                .build();
+//
+//        tagDOMapper.insertTag(insertTagDO);
 
-        if(Objects.nonNull(tagDO)){
-            log.warn("标签名称: {}，此标签已经存在，无法重复创建",tagName);
-            throw new BizException(ResponseCodeEnum.TAG_ID_IS_NOT_EXISTED);
+        List<String> tags = addTagReqVO.getTags();
+        List<TagDO> tagDOS = tagDOMapper.selectByTagsName(tags);
+        if(!CollectionUtils.isEmpty(tagDOS)) {
+            throw new BizException(ResponseCodeEnum.TAG_NAME_IS_EXISTED);
         }
 
-        TagDO insertTagDO = TagDO.builder()
-                .name(tagName)
-                .build();
+        List<TagDO> insertTagDOS = tags.stream().map(tag ->
+                TagDO.builder()
+                    .name(tag)
+                    .build()).collect(Collectors.toList());
+        tagDOMapper.insertTags(insertTagDOS);
 
-        tagDOMapper.insertTag(insertTagDO);
         return Response.success();
     }
 
     @Override
     public PageResponse findTagPageList(FindTagPageListReqVO findTagPageListReqVO){
-        String tagName = findTagPageListReqVO.getTagName();
+        String tagName = findTagPageListReqVO.getName();
         long pageNo = findTagPageListReqVO.getPageNo();
 
-        long pageSize = 4;
+        long pageSize = findTagPageListReqVO.getPageSize();
 
         long totalCount = tagDOMapper.selectCountByTagName(tagName);
         if(totalCount == 0){
@@ -66,7 +80,12 @@ public class AdminTagServiceImpl implements AdminTagService {
 
         long offset = PageResponse.getOffset(pageNo, pageSize);
 
-        List<TagDO> tagDOS = tagDOMapper.selectPageListByTagName(tagName,offset,pageSize);
+        LocalDate startDate = findTagPageListReqVO.getStartDate();
+        LocalDate endDate = findTagPageListReqVO.getEndDate();
+
+
+//        List<TagDO> tagDOS = tagDOMapper.selectPageListByTagName(tagName,offset,pageSize);
+        List<TagDO> tagDOS = tagDOMapper.selectPageListByTagNameInTargetTime(tagName,offset,pageSize,startDate,endDate);
         if(CollectionUtils.isEmpty(tagDOS)){
             return PageResponse.success(null,pageNo,totalCount,pageSize);
         }

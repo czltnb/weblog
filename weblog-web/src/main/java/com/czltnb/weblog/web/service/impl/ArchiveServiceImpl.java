@@ -33,7 +33,7 @@ public class ArchiveServiceImpl implements ArchiveService {
     public PageResponse findArchivePageList(FindArchiveArticlePageListReqVO findArchiveArticlePageListReqVO) {
         long pageNo = findArchiveArticlePageListReqVO.getPageNo();
 
-        long pageSize = 10;
+        long pageSize = findArchiveArticlePageListReqVO.getPageSize();
 
         long totalCount =articleDOMapper.selectCount();
 

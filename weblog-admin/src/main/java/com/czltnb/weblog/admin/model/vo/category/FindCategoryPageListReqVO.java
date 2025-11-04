@@ -22,14 +22,17 @@ public class FindCategoryPageListReqVO {
     @NotNull(message = "页码不能为空")
     private Integer pageNo = 1; // 默认值为第一页
 
-//    /**
-//     * 创建的起始日期，方便按照日期查询
-//     */
-//    private LocalDate startDate;
-//
-//    /**
-//     * 创建的结束日期
-//     */
-//    private LocalDate endDate;
+    @NotNull(message = "分页尺寸不能为空")
+    private Integer pageSize;
+
+    /**
+     * 创建的起始日期，方便按照日期查询
+     */
+    private LocalDate startDate;
+
+    /**
+     * 创建的结束日期
+     */
+    private LocalDate endDate;
 
 }
