@@ -203,6 +203,23 @@
                         </excludes>
                     </configuration>
                 </plugin>
+                
+   <!-- 2. 核心新增：添加 maven-compiler-plugin 配置，适配 Java 21 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerArgs>
+                            <arg>--release</arg>
+                            <arg>${java.version}</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
